@@ -1,0 +1,18 @@
+# Do not remove this line or mod_rewrite rules and search engine friendly URLs will stop working
+RewriteBase /
+
+#Sécurise l'accès à .htaccess en l'interdisant à tout le monde
+<Files ".ht*">
+Order allow,deny
+Deny from all
+Satisfy all
+</Files>
+
+#Interdit de lister le contenu des répertoires
+Options -Indexes
+
+#Redirige les erreurs vers mes propres pages d'erreur
+ErrorDocument 401 http://bert-guillaume.zz.mu/View/erreurs/401.php
+ErrorDocument 403 http://bert-guillaume.zz.mu/View/erreurs/403.php
+ErrorDocument 404 http://bert-guillaume.zz.mu/View/erreurs/404.php
+ErrorDocument 500 http://bert-guillaume.zz.mu/View/erreurs/500.php
