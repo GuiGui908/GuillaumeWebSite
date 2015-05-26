@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['URL']; ?>/Ressources/RedCss/RedStyle.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['URL']; ?>/Ressources/CustomCss/listeDeroulante.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['URL']; ?>/Ressources/CustomCss/alert.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['URL']; ?>/Ressources/CustomCss/Custom.css" media="all"/>
 </head>
 <body>
 	<div id="wrap">

@@ -27,7 +27,7 @@ class Controller {
 		extract($this->arrayVariables);
 
 		$pageName = $this->pageName;
-require_once('View/contexte/header.php');
+		require_once('View/contexte/header.php');
 		require_once('View/contexte/menu.php');
 		if(file_exists($this->viewPath))
 			require_once($this->viewPath);

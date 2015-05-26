@@ -39,7 +39,7 @@ class PartageController extends Controller
 			$this->defaultAction();
 		}
 		
-		$totalSize = disk_total_space($_SERVER['DOCUMENT_ROOT'].'Guillaume/Ressources/partage_fichiers/') / 1048576;
+		$totalSize = 666666;//disk_total_space($_SERVER['DOCUMENT_ROOT'].'Guillaume/Ressources/partage_fichiers/') / 1048576;
 		$totalSize = (string) number_format($totalSize, 1, '.', ' ');
 		
 		parent::setVariable('arrayDir', $arrayDir);
