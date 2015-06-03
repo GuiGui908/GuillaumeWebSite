@@ -27,7 +27,10 @@ class FeedBackController extends Controller
 		$header .= 'Content-Type: multipart/mixed; boundary='.$boundary."\n\n";
 		$destinataire = 'guigui908b@gmail.com';
 		$sujet = 'FeedBack - Mon site';
+		
+		$contenu  = "--".$boundary."\n";
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
+		$contenu  = "--".$boundary."\n";
 
 		if(mail($destinataire, $sujet, $contenu, $header))		// Envoi
 			parent::setVariable("succes", "Informations envoyées par mail à Guillaume, Merciiii :)");
