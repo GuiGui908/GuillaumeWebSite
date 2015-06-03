@@ -2,3 +2,18 @@
 font-size: 30px;
 color: #5a005d;
 }
+
+.ligne {		/* Ligne du formulaire de FeedBack */
+display: block;
+width: auto;
+padding: 7px 0 7px 0;
+margin: 10px 0 10px 0;
+background-color: #e5e5e5;
+}
+.ligne p {
+float:left;
+width: 150px;
+}
+
+.submitButtons {
+}

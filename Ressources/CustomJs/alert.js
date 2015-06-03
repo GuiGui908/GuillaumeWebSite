@@ -513,9 +513,6 @@ var msg = ({
 			document.getElementById("dirNewFolder").focus();
 			document.getElementById("dirNewFolder").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
 		}
-		else if(allOptions.action === "uploadfiles") {
-			document.getElementById("dirUpload").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
-		}
 
 		// positionner la boîte de message à l'endroit voulu de la fenêtre
 		this.setPosition(allOptions.position);

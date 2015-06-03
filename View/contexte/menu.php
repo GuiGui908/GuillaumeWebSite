@@ -1,10 +1,11 @@
 <div id="header">
-	<h3>Mis à jour le 20 Mai 2015</h3>
+	<h3>Mis à jour le 3 Juin 2015</h3>
 </div>
 
 <div id="menu">
 	<ul>
 	<li><a href="<?php echo $GLOBALS['URL']; ?>index.php">Accueil</a></li>
+	<li><a href="<?php echo $GLOBALS['URL']; ?>feedback.php">FeedBack</a></li>
 	<li><a href="<?php echo $GLOBALS['URL']; ?>CV.php">CV / Entreprises</a></li>
 	<li><a href="<?php echo $GLOBALS['URL']; ?>Photo.php">Photos</a></li>
 	<li><a href="<?php echo $GLOBALS['URL']; ?>Jeu.php">Jeux</a></li>

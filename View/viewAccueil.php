@@ -1,5 +1,5 @@
 <div class="left"> 
-Bienvenue !!! :)  Tu peux <b><a href="">lacher un feedback</a></b> sur ce que t'as vu du site :<br />
+Bienvenue !!! :)  Tu peux <b><a href="feedback.php">lacher un feedback</a></b> sur ce que t'as vu du site :<br />
 Bugs / Bonnes idées / Fails / Améliorations ^^<br />
 Merciii
 </div>
