@@ -32,7 +32,6 @@
 	color: #584b2c;
 	border-bottom: 1px solid #c2b487;
 	
-	-moz-border-radius: .8em 0 0 0;
 	-webkit-border-radius: .8em 0 0 0;
 	border-radius: .8em 0 0 0;
 }
@@ -41,12 +40,11 @@
 .msgBox { 
 	border-width: 1px;
 	border-style: solid;
-	max-width: 400px;
+	max-width: 500px;
 	padding: 0;
 	background: #fff;
 	border-color: #c2b487;
 	
-	-moz-border-radius: 1em 0 1em 0;
 	-webkit-border-radius: 1em 2em 1em 2em;
 	border-radius: 1em 0 1em 0;
 }
@@ -63,22 +61,28 @@
 	text-align: center;
 	margin: .3em 0;
 	padding: 0;
-	padding-bottom: 1px;
+	padding-bottom: 10px;
 }
 .msgBox #closeBtn a {
 	padding: 4px .5em;
 	border: 1px solid #c2b487;
 	border-width: 1px;
-	margin: 0 30px .0 .6em; 
+	margin: 0 40px 0 40px; 
 	font-weight:bold;
 	text-decoration: none;
 	color: #514721;
 
-	-moz-border-radius: 0 0 .8em 0;
 	-webkit-border-radius: 0 0 .8em 0;
 }
 .msgBox #closeBtn a:hover {
 	background: #e8e0ca;
+}
+
+/* le champ input (pour créer un dossier) */
+.msgBox input {
+	min-width: 50%;
+	margin-left: 25%;
+	margin-right: 25%;
 }
 
 /* skins

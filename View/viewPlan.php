@@ -4,5 +4,4 @@
 	<h1><a href="<?php echo $GLOBALS['URL']; ?>Photo.php">Photos</a></h1>
 	<h1><a href="<?php echo $GLOBALS['URL']; ?>Jeu.php">Jeux</a></h1>
 	<h1><a href="<?php echo $GLOBALS['URL']; ?>Partage.php">Partage de Fichiers</a></h1>
-	<h1><a href="<?php echo $GLOBALS['URL']; ?>Plan.php">Plan du Site</a></h1>
 </div>

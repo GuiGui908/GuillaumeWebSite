@@ -50,9 +50,10 @@
 <div class="right">
 	<h3>Général</h3> 
 	<b>Espace utilisé :</b><br />
-	<?php echo $this->getVariable('totalSize'); ?> / 999 Mo<br /><br />
-	<a href="Partage.php?action=mkdir&path=toto">Créer un dossier</a><br />
-	<a href="#">Importer des fichiers</a><br /><br />
+	<?php echo $this->getVariable('totalSize'); ?> Mo / 1 Go<br /><br />
+	<a href="#" id="create_dir" class="btn">Créer un dossier...</a><br /><br />
+	<a href="#" id="up_file" class="btn">Importer fichiers...</a><br /><br />
+	<a href="#" id="suppr_all" class="btn">Supprimer dossier...</a><br /><br /><br />
 	
 	<h3>Détails du fichier</h3> 
 	<b>Nom :</b><br />
@@ -61,8 +62,9 @@
 	<b>Taille :</b> <span  id="detail_taille">--</span> Mo<br /><br />
 	<b>Date d'import :</b><br />
 	<span  id="detail_date">-- -- --</span><br /><br />
-	<a href="#" id="detail_dl" download="default">Télécharger</a>&nbsp;&nbsp;
-	<a href="#" id="detail_suppr">Supprimer</a><br /><br />
+	<a href="#" id="detail_dl" download="default" class="btn">Télécharger</a><br /><br />
+	<a href="#" id="detail_suppr" class="btn">Supprimer...</a><br /><br />
+	<span id="suppr_link" class="hidden">#</span>
 </div>
 
 <script type="text/javascript" src="Ressources/CustomJs/alert.js"></script>
@@ -79,18 +81,77 @@
 		echo '	document.getElementById("detail_date").innerHTML = "'.$dirName['date'].'";';
 		echo '	document.getElementById("detail_dl").href = "'.$dirName['lien'].'";';
 		echo '	document.getElementById("detail_dl").download = "'.$dirName['nom'].'";';
-		echo '	document.getElementById("detail_suppr").href = "Partage.php?action=supprFile&path='.$dirName['lien'].'";';
+		echo '	document.getElementById("suppr_link").innerHTML = "Partage.php?action=supprFile&path='.$dirName['lien'].'";';
 		echo '}';
 	}
 ?>
-	document.getElementById("detail_suppr").onclick = function() {
-		if( strcmp(document.getElementById("detail_suppr").href, '#')==0 )
-			return false;
-		var options = {
-			"title": "Etes-vous vraiment sûr ?",
-			"modal": "True"
-		};
-		msg.open( "Voulez-vous supprimer le fichier du serveur ?" , options);
+
+	var suppr = document.getElementById("detail_suppr");
+	suppr.addEventListener("click", function() {
+		if(document.getElementById("detail_nom").innerHTML != "-- -- -- --") {
+			var options = {
+				"title": "Etes-vous vraiment sûr ?",
+				"btnOk" : "Oui je le veux",
+				"btnNop" : "NON T ouf !",
+				"modal": "True",
+				"link" : document.getElementById("suppr_link").innerHTML
+			};
+			msg.open( "Voulez-vous supprimer le fichier \"" + document.getElementById("detail_nom").innerHTML + "\"du serveur ?<br /><br />Attention, c'est IRREVERSIBLE !<br />" , options);
+		}
 		return false;
-	};
+	});
+	
+	var mkdir = document.getElementById("create_dir");
+	mkdir.addEventListener("click", function() {
+		var options = {
+			"title": "Créer un dossier",
+			"modal": "True",
+			"btnOk" : "Créer",
+			"btnNop" : "Annuler",
+			"action": "creerep",
+			"link" : "Partage.php?action=mkdir&path=<?php echo $this->getVariable('currentPath'); ?>"
+
+		};
+		msg.open( "Créer un nouveau dossier dans  \".<?php echo $this->getVariable('currentPath'); ?>\"<br /><br />"+
+					"<input type=\"text\" id=\"dirNewFolder\" placeholder=\"Nom du dossier\" /><br />" , options);
+		return false;
+	});
+
+	var upload = document.getElementById("up_file");
+	upload.addEventListener("click", function() {
+		var options = {
+			"title": "Importer des fichiers",
+			"modal": "True",
+			"btnOk" : "Importer",
+			"btnNop" : "Annuler",
+			"action": "uploadfiles",
+			"link" : "Partage.php?action=up&path=<?php echo $this->getVariable('currentPath'); ?>"
+
+		};
+		msg.open( "Sélectionnez les fichiers à importer :<br /><br />"+
+					"<input type=\"file\" id=\"dirUpload\" multiple /><br />" , options);
+		return false;
+	});
+
+	var supprToutDossier = document.getElementById("suppr_all");
+	supprToutDossier.addEventListener("click", function() {
+		var options = {
+			"title": "Supprimer tout le dossier",
+			"modal": "True",
+			"btnOk" : "Oui",
+			"btnNop" : "Annuler",
+			"link" : "Partage.php?action=supprAll&path=<?php echo $this->getVariable('currentPath'); ?>"
+
+		};
+		msg.open( "Voulez-vous vraiment supprimer tout le dossier<br />"+
+				"<?php if($currentPath === '/')   echo 'racine';
+						else {
+							$currentPath = $this->getVariable('currentPath');				// Isole et echo du nom du dossier courant
+							$indiceDebutNomDossierCourant = strrpos($currentPath, '/', -2);					  
+							echo '\"'.substr($currentPath, $indiceDebutNomDossierCourant+1, strlen($currentPath)-$indiceDebutNomDossierCourant-2) .'\"';
+						}
+				?> et tout son contenu ?" , options);
+		return false;
+	});
+
 </script>

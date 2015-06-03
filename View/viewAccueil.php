@@ -1,3 +1,8 @@
+<div class="left"> 
+Bienvenue !!! :)  Tu peux <b><a href="">lacher un feedback</a></b> sur ce que t'as vu du site :<br />
+Bugs / Bonnes idées / Fails / Améliorations ^^<br />
+Merciii
+</div>
 <div class="center"> 
 	<img src="Ressources/images/neige.jpg" alt="neige.jpg"/>
 	<img src="Ressources/images/mer.jpg" alt="mer.jpg"/>

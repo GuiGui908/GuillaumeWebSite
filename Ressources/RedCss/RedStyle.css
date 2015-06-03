@@ -20,6 +20,36 @@ text-decoration: underline;
 color: #4a3c19;
 }
 
+.hidden {
+display: none;
+}
+
+.btn {
+background: #a32f30;
+background-image: -webkit-linear-gradient(top, #a32f30, #521414);
+background-image: -moz-linear-gradient(top, #a32f30, #521414);
+background-image: -ms-linear-gradient(top, #a32f30, #521414);
+background-image: -o-linear-gradient(top, #a32f30, #521414);
+background-image: linear-gradient(to bottom, #a32f30, #521414);
+-webkit-border-radius: 10;
+-moz-border-radius: 10;
+border-radius: 10px;
+color: #ffffff;
+padding: 3px 10px 3px 10px;
+text-decoration: none;
+}
+.btn:hover {
+background: #a33b3c;
+background-image: -webkit-linear-gradient(top, #a33b3c, #523939);
+background-image: -moz-linear-gradient(top, #a33b3c, #523939);
+background-image: -ms-linear-gradient(top, #a33b3c, #523939);
+background-image: -o-linear-gradient(top, #a33b3c, #523939);
+background-image: linear-gradient(to bottom, #a33b3c, #523939);
+border: solid #ff0000 2px;
+color: #ffffff;
+text-decoration: none;
+}
+
 p {
 padding: 0 10px 14px 10px;
 }
@@ -109,7 +139,7 @@ padding: 25px 10px 10px 10px;
 }
 .adressBar {
 width: 700px;
-margin: 0 0 10px 10px; 
+margin: 0 0 10px 20px; 
 padding: 5px 5px 5px 5px; 
 background-color: #FFF;
 border: 1px solid #000;
@@ -123,17 +153,15 @@ vertical-align: middle;
 margin-left: 10px;
 }
 .erreur {
-text-align: center;
-width: 500px;
-min-height: 30px;
+padding: 10px 20px 10px 20px;
+margin: 5px 15px 7px 15px;
 background-color: #d53838;
 border-radius: 10em;
 border: 1px solid #000;
 }
 .succes{
-text-align: center;
-width: 500px;
-min-height: 30px;
+padding: 10px 20px 10px 20px;
+margin: 5px 15px 7px 15px;
 background-color: #38d542;
 border-radius: 10em;
 border: 1px solid #000;
@@ -189,13 +217,6 @@ text-decoration: underline;
 padding-left: 10px;
 padding-bottom: 10px;
 }
-.right a{
-color: #1b1bc7;
-text-decoration: underline;
-}
-.right a:hover {
-text-decoration: none;
-}
 .right ul {
 padding: 10px 0 15px 30px;
 list-style-type: square;
@@ -204,8 +225,13 @@ list-style-type: square;
 padding-bottom: 7px;
 }
 .right ul li a {
+color: #1b1bc7;
+text-decoration: underline;
 font-weight: 100;
 font-size: 12px;
+}
+.right ul li a:hover {
+text-decoration: none;
 }
 .right b {
 color: #444;

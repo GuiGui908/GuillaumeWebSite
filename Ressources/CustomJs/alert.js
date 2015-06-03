@@ -57,6 +57,7 @@ var msg = ({
 		"ajaxContent" : null, // string ajaxContent : l'adresse url pour une requête ajax dont la réponse viendra remplacer le contenu du message
 		"ajaxAbortDelay" : 20, // integer ajaxAbortDelay : délai (en secondes) avant abandon d'une requête ajax
 		"remember" : true, // boolean remember : indique s'il faut mémoriser le message et ses options, pour un éventuel réaffichage ultérieur
+		"action" : "close", // Par défaut on ferme la fenêtre quand on clique sur OK, sans rien faire de +
 		"faitesmoipaschieraveclesvirgules" : null
 	},
 	
@@ -359,6 +360,27 @@ var msg = ({
 	},
 	
 	
+	/**  uploadfiles()
+	*    Fonction appellée quand on a une popup qui sert à uploader des fichiers et qu'on a cliqué sur "Uploader"
+	*/
+	"uploadfiles" : function () {
+		alert("TODOOOOOOOOO");
+		msg.close();
+	},
+	
+	
+	/**  creerep()
+	*    Fonction appellée quand on a une popup qui sert à créer un répertoire et qu'on a cliqué sur "Créer"
+	*/
+	"creerep" : function () {
+		var inputField = document.getElementById("dirNewFolder");
+		if(inputField.value == "")
+			document.getElementById("aBtnSubmit").href = "#";
+		else
+			document.getElementById("aBtnSubmit").href += inputField.value;
+		msg.close();
+	},
+	
 	/** close() 
 	 * --------------------------------------------------------------------------------------------
 	 * ferme le message
@@ -381,6 +403,7 @@ var msg = ({
 			if (typeof(this.msgOptionsRec.onClose)=='function') {this.msgOptionsRec.onClose();}	
 		}
 	},
+	
 	
 	
 	/** ajaxUpdate() 
@@ -474,11 +497,11 @@ var msg = ({
 			
 			// bouton Gauche (optionnel)
 			var btnG = '';
-			if (allOptions.button || allOptions.button===0) { btnG = '<div id="closeBtn"><a href="#" onclick="msg.close();return false;">Oui je le veux</a>'; }
+			if (allOptions.button || allOptions.button===0) { btnG = '<div id="closeBtn"><a id="aBtnSubmit" href="'+allOptions.link+'" onclick="msg.'+allOptions.action+'();">'+allOptions.btnOk+'</a>'; }
 		
 			// bouton Droite (optionnel)
 			var btnD = '';
-			if (allOptions.button || allOptions.button===0) { btnD = '<a href="#" onclick="msg.close();return false;">NON T\'ié fada !</a></div>'; }
+			if (allOptions.button || allOptions.button===0) { btnD = '<a href="#" onclick="msg.close();return false;">'+allOptions.btnNop+'</a></div>'; }
 		
 		// intégrer tout ça dans la boîte
 		msgBoxObj.innerHTML = titleObj + "\n" + msgContentObj + "\n" + btnG + btnD;
@@ -486,6 +509,13 @@ var msg = ({
         // appliquer les options de style à la boîte
         this.transfer(allOptions.style, msgBoxObj.style);
         if (this.ie && this.ie<7 && msgBoxObj.offsetWidth>allOptions.ieMaxWidth) {  msgBoxObj.style.width = allOptions.ieMaxWidth + 'px'; } // cheat max-width pour IE<7
+		if(allOptions.action === "creerep") {
+			document.getElementById("dirNewFolder").focus();
+			document.getElementById("dirNewFolder").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
+		}
+		else if(allOptions.action === "uploadfiles") {
+			document.getElementById("dirUpload").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
+		}
 
 		// positionner la boîte de message à l'endroit voulu de la fenêtre
 		this.setPosition(allOptions.position);

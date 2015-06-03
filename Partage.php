@@ -23,14 +23,7 @@
 	
 	
 	// Switch($action)
-	if($action === 'mkdir')
-	{
-		if(!isset($_GET['path']))	// erreur
-			$controlleur->creerRep('');
-		else
-			$controlleur->creerRep(strip_tags($_GET['path']));
-	}
-	else if($action == 'setDir')
+	if($action == 'setDir')
 	{
 		if(!isset($_GET['path']))	// erreur
 			$controlleur->defaultAction();
@@ -41,6 +34,13 @@
 			$controlleur->setTableauFichiers('./Ressources/partage_fichiers'.$path);
 		}
 	}
+	else if($action === 'mkdir')
+	{
+		if(!isset($_GET['path']))	// erreur
+			$controlleur->defaultAction('');
+		else
+			$controlleur->creerRep( strip_tags($_GET['path']) );
+	}
 	else if($action == 'supprFile')
 	{
 		if(!isset($_GET['path']))	// erreur
@@ -49,6 +49,16 @@
 		{
 			$path = strip_tags($_GET['path']);
 			$controlleur->supprFile($path);
+		}
+	}
+	else if($action == 'supprAll')
+	{
+		if(!isset($_GET['path']))	// erreur
+			$controlleur->defaultAction();
+		else
+		{
+			$path = strip_tags($_GET['path']);
+			$controlleur->supprAllFolder('./Ressources/partage_fichiers'.$path);
 		}
 	}
 	else
