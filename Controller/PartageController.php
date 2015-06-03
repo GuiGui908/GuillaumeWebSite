@@ -87,10 +87,59 @@ class PartageController extends Controller
 		}
 		else		// Youpiiiiiii
 		{
-			$this->setTableauFichiers('./Ressources/partage_fichiers'.$path);
+			$this->setTableauFichiers('./Ressources/partage_fichiers'.$path.'/');
 			parent::setVariable('succes', 'Répertoire créé avec succès :)');
 		}		
 	}
+	
+	
+	// VERIFIE PUIS STOCKE LES FICHIERS PASSES PAR LA METHODE POST
+	function uploadFichiers($path)
+	{
+		$uploadedFiles = $this->diverse_array($_FILES["upInput"]);	
+		
+		// Vérifie que chaque fichier est transféré sans erreur
+		$flagError = false;
+		$msgError = '';
+		foreach($uploadedFiles as $file) {
+			if($file['error'] != UPLOAD_ERR_OK) {		// Erreur
+				$flagError = true;
+				$msgError .= 'Le transfert de "'.$file['name'].'" a échoué ('.$err.').<br />';
+			}
+		}
+		
+		if(!$flagError && is_dir($path)) 		// if pas d'erreurs
+		{
+			$succesMsg = '';
+			$cpt = 0;
+			foreach($uploadedFiles as $file)
+			{
+				echo $path.$file['name'].'<br>';
+				if(file_exists($path.$file['name'])) { // Préviens les doublons
+					move_uploaded_file($file['tmp_name'], $path.$file['name'].' (2)');	// Déplace le fichier
+				}
+				move_uploaded_file($file['tmp_name'], $path.$file['name']);	// Déplace le fichier
+				$succesMsg .= $file['name'].' ; ';		// Recup le nom pr le message "sucess"
+				$cpt++;
+			}
+			parent::setVariable('succes', $cpt.' fichiers importés avec succès : '.$succesMsg);
+		}
+		else {
+			parent::setVariable('erreur', 'Erreur pendant le transfert ou avec le path...<br />'.$msgError);
+		}			
+		$this->setTableauFichiers($path);
+	}
+	
+	// Permet de mettre le tableau en forme : tab[fileX][caracX] au lieu de tab[caracX][fileX]
+	// http://php.net/manual/fr/reserved.variables.files.php#109958
+	function diverse_array($vector) {
+		$result = array();
+		foreach($vector as $key1 => $value1)
+			foreach($value1 as $key2 => $value2)
+				$result[$key2][$key1] = $value2;
+		return $result;
+	} 
+	
 	
 	// SUPPRIME LE FICHIER PATH
 	function supprFile($path)

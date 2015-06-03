@@ -21,16 +21,14 @@ class FeedBackController extends Controller
 	
 	function envoyerNotif()
 	{
-		$boundary = md5(uniqid(microtime(), TRUE));		// clé aléatoire de limite
+		$boundary = md5(uniqid(microtime(), TRUE));		// clé aléatoire de limite (utile pour les pièces jointes, pas trop pour le contenu....
 		$header  = 'From: Mon site - Hostinger <noreply@siteperso.hostinger.com>'."\n";
 		$header .= 'MIME-Version: 1.0'."\n";
 		$header .= 'Content-Type: multipart/mixed; boundary='.$boundary."\n\n";
 		$destinataire = 'guigui908b@gmail.com';
 		$sujet = 'FeedBack - Mon site';
 		
-		$contenu  = "--".$boundary."\n";
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
-		$contenu  = "--".$boundary."\n";
 
 		if(mail($destinataire, $sujet, $contenu, $header))		// Envoi
 			parent::setVariable("succes", "Informations envoyées par mail à Guillaume, Merciiii :)");

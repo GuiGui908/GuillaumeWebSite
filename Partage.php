@@ -9,57 +9,59 @@
 	$controlleur = new PartageController('Partage', 'Partage de fichiers');
 
 	// Set $action en fonction de _GET
-	if( !isset($_GET['action']))
+	$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_SPECIAL_CHARS);
+	if( !isset($action))
 		$action = 'defaultAction';
-	else
-		$action = strip_tags($_GET['action']);
 	
 	//**********************  TODO  ***********
 	//*****************************************
-	// verifier que dans la partie client on a jamais "./Ressources/partage_fichiers"
-	// Import de fichier : Boite recherche fichiers de tout type, multific. Limiter taille de chaque à XX et vérif que taille dépasse pas 999Mo
-	// Créer un dossier
-	// Bug du "file_size_left_on_disk" sur le site en ligne
+	// Import de fichier : Boite recherche fichiers de tout type, multific. L
 	
 	
 	// Switch($action)
 	if($action == 'setDir')
 	{
-		if(!isset($_GET['path']))	// erreur
+		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($path))	// erreur
 			$controlleur->defaultAction();
 		else
 		{
-			$path = strip_tags($_GET['path']);
 			substr($path, 2);
 			$controlleur->setTableauFichiers('./Ressources/partage_fichiers'.$path);
 		}
 	}
-	else if($action === 'mkdir')
+	else if($action == 'mkdir')
 	{
-		if(!isset($_GET['path']))	// erreur
-			$controlleur->defaultAction('');
+		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($path))	// erreur
+			$controlleur->defaultAction();
 		else
-			$controlleur->creerRep( strip_tags($_GET['path']) );
+			$controlleur->creerRep($path);
+	}
+	else if($action == 'up')
+	{
+		echo $_GET['path'];
+		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($path))	// erreur
+			$controlleur->defaultAction();
+		else
+			$controlleur->uploadFichiers('./Ressources/partage_fichiers'.$path);
 	}
 	else if($action == 'supprFile')
 	{
-		if(!isset($_GET['path']))	// erreur
+		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($path))	// erreur
 			$controlleur->defaultAction();
 		else
-		{
-			$path = strip_tags($_GET['path']);
 			$controlleur->supprFile($path);
-		}
 	}
 	else if($action == 'supprAll')
 	{
-		if(!isset($_GET['path']))	// erreur
+		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($path))	// erreur
 			$controlleur->defaultAction();
 		else
-		{
-			$path = strip_tags($_GET['path']);
 			$controlleur->supprAllFolder('./Ressources/partage_fichiers'.$path);
-		}
 	}
 	else
 		$controlleur->defaultAction();

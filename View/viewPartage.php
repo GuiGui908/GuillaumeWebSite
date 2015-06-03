@@ -50,7 +50,7 @@
 <div class="right">
 	<h3>Général</h3> 
 	<b>Espace utilisé :</b><br />
-	<?php echo $this->getVariable('totalSize'); ?> Mo / 1 Go<br /><br />
+	<span id="totalSize"><?php echo $this->getVariable('totalSize'); ?></span> Mo / 1 Go<br /><br />
 	<a href="#" id="create_dir" class="btn">Créer un dossier...</a><br /><br />
 	<a href="#" id="up_file" class="btn">Importer fichiers...</a><br /><br />
 	<a href="#" id="suppr_all" class="btn">Supprimer dossier...</a><br /><br /><br />
@@ -125,11 +125,12 @@
 			"btnOk" : "Importer",
 			"btnNop" : "Annuler",
 			"action": "uploadfiles",
-			"link" : "Partage.php?action=up&path=<?php echo $this->getVariable('currentPath'); ?>"
+			"link" : "#"
 
 		};
 		msg.open( "Sélectionnez les fichiers à importer :<br /><br />"+
-					"<input type=\"file\" id=\"dirUpload\" multiple /><br />" , options);
+					"<form id=\"FormUp\" action=\"Partage.php?action=up&path=<?php echo $this->getVariable('currentPath'); ?>\" method=\"post\" enctype=\"multipart/form-data\">"+
+					"<input type=\"file\" name=\"upInput[]\" id=\"upInput\" multiple /></form><br />" , options);
 		return false;
 	});
 
