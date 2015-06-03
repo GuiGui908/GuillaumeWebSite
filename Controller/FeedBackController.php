@@ -13,7 +13,7 @@ class FeedBackController extends Controller
 		$fichier = filter_input(INPUT_POST, 'fichier', FILTER_SANITIZE_SPECIAL_CHARS);
 		$bug     = filter_input(INPUT_POST, 'bug', FILTER_SANITIZE_SPECIAL_CHARS);
 		
-echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
+//echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
 		
 		if(false)		// Si erreur
 			parent::setVariable("erreur", "Y'a eu un probleme avec le stockage des données :/</br>Opération annulée...");
@@ -21,9 +21,10 @@ echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
 	
 	function envoyerNotif()
 	{
+		$boundary = md5(uniqid(microtime(), TRUE));		// clé aléatoire de limite
 		$header  = 'From: Mon site - Hostinger <noreply@siteperso.hostinger.com>'."\n";
 		$header .= 'MIME-Version: 1.0'."\n";
-		$header .= 'Content-Type: multipart/mixed;';
+		$header .= 'Content-Type: multipart/mixed; boundary='.$boundary."\n\n";
 		$destinataire = 'guigui908b@gmail.com';
 		$sujet = 'FeedBack - Mon site';
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
