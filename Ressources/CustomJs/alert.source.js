@@ -382,8 +382,9 @@ var msg = ({
 		if(sommeTaille > 209715200)		// Taille totale du Up<200Mo
 			alert("Vous ne pouvez pas uploader plus de 200Mo d'un coup.\nLa somme des tailles des fichiers est trop grande ("+(sommeTaille/1048576).toFixed(2)+" Mo");		
 
+		sommeTaille = sommeTaille/1048576;	// Conversion de octet vers Mo
 		sommeTaille += document.getElementById("totalSize").innerHTML;	// On ajoute la taille du dossier actuel
-		if(sommeTaille/1048576 > 990) {				//Le tout doit pas dépasser 1Go
+		if(sommeTaille > 990) {				//Le tout doit pas dépasser 1Go
 			alert("Les fichiers que vous avez sélectionné sont trop gros.\n"+
 					"La capacité maximale de stockage est d' 1Go, et "+document.getElementById("totalSize").innerHTML+" Mo sont déjà utilisés");
 			return false;

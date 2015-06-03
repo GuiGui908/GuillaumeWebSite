@@ -40,7 +40,6 @@
 	}
 	else if($action == 'up')
 	{
-		echo $_GET['path'];
 		$path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_SPECIAL_CHARS);
 		if(!isset($path))	// erreur
 			$controlleur->defaultAction();
