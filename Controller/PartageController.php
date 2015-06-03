@@ -114,7 +114,6 @@ class PartageController extends Controller
 			$cpt = 0;
 			foreach($uploadedFiles as $file)
 			{
-				echo $path.$file['name'].'<br>';
 				if(file_exists($path.$file['name'])) { // Préviens les doublons
 					move_uploaded_file($file['tmp_name'], $path.$file['name'].' (2)');	// Déplace le fichier
 				}
