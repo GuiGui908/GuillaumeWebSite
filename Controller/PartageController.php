@@ -38,7 +38,9 @@ class PartageController extends Controller
 		{
 			parent::setVariable('erreur', 'Impossible d\'accéder au répertoire : '.$dirPath);
 		}
+echo $GLOBALS['ROOT'].'Ressources/partage_fichiers';
 		$totalSize = $this->taille_dossier($GLOBALS['ROOT'].'Ressources/partage_fichiers');
+echo '<br>totalSize='.$totalSize;
 		$totalSize /= 1048576; 		// on divise par 1024*1024 pour avoir des Mo
 		$totalSize = (string) number_format($totalSize, 1, '.', ' ');
 		

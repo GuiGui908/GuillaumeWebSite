@@ -13,7 +13,7 @@ class FeedBackController extends Controller
 		$fichier = filter_input(INPUT_POST, 'fichier', FILTER_SANITIZE_SPECIAL_CHARS);
 		$bug     = filter_input(INPUT_POST, 'bug', FILTER_SANITIZE_SPECIAL_CHARS);
 		
-		//echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
+echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
 		
 		if(false)		// Si erreur
 			parent::setVariable("erreur", "Y'a eu un probleme avec le stockage des données :/</br>Opération annulée...");
@@ -29,7 +29,7 @@ class FeedBackController extends Controller
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
 
 		if(mail($destinataire, $sujet, $contenu, $header))		// Envoi
-			parent::setVariable("suces", "Informations envoyées par mail à Guillaume, Merciiii :)");
+			parent::setVariable("succes", "Informations envoyées par mail à Guillaume, Merciiii :)");
 		else
 			parent::setVariable("erreur", "Y'a eu un probleme avec l'envoi de la notification :/</br>Opération annulée...");
 	}
