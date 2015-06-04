@@ -1,3 +1,4 @@
+<?php echo phpinfo() ; ?>
 //TODO Mettre une barre de chargement / une patience quand on upload des fichiers
 <div class="adressBar">
 <?php
