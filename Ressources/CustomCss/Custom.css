@@ -15,5 +15,11 @@ float:left;
 width: 150px;
 }
 
-.submitButtons {
+.jeuxImgBox {		/* Disposition des images dans Jeu.php */
+display: block;
+width: auto;
+margin-bottom: 20px;
+}
+.jeuxImgBox img {
+padding: 7px 10px 7px 10px;
 }

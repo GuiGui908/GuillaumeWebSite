@@ -11,7 +11,7 @@
 	}
 ?>
 <div class="left"> 
-    <h1>Donnez votre avis ici ! <img src="Ressources/images/clinOeil.jpg" /></h1>
+    <h1>Donnez votre avis ici ! <img src="Ressources/images/clinOeil.jpg" alt=";)"/></h1>
     <h3>Vos réflexions sont anonymes et stockées dans la base de données. Ca aide à améliorer le design !</h3>
 	<br />
     <form name="post" method="post" action="feedback.php?action=valider" onSubmit="return envoyer();" enctype="multipart/form-data">

@@ -15,26 +15,26 @@
 	if($this->getVariable('returnPath') == '')
 		echo '#">';
 	else
-		echo 'Partage.php?action=setDir&path='.$this->getVariable('returnPath').'">';
-	echo '	<img src="'.$GLOBALS['URL'].'/Ressources/images/arrowLeft.jpg" />';
+		echo 'Partage.php?action=setDir\&path='.$this->getVariable('returnPath').'">';
+	echo '	<img src="'.$GLOBALS['URL'].'/Ressources/images/arrowLeft.jpg" alt="Back"/>';
 	echo '</a>';	
 	echo '<b>.'.$this->getVariable('currentPath').'</b>';		// Chemin
 ?>
 </div>
 
 <div class="left noselect">
-<h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/dossier.jpg" /> Dossiers</h3>
+<h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/dossier.jpg" alt="Rep_ico"/> Dossiers</h3>
 <hr />
 	<div class="boxFichiers">
 	<?php
 		$arrayDir = $this->getVariable('arrayDir');
 		foreach($arrayDir as $dirName)
 		{
-			echo '<a href="Partage.php?action=setDir&path='.$this->getVariable('currentPath').$dirName['nom'].'/" class="fic" id="'.$dirName['id'].'">'.$dirName['nom'].'</a>';
+			echo '<a href="Partage.php?action=setDir\&path='.$this->getVariable('currentPath').$dirName['nom'].'/" class="fic" id="'.$dirName['id'].'">'.$dirName['nom'].'</a>';
 		}
 	?>
 	</div>
-<br /><h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/fichier.jpg" /> Fichiers</h3>
+<br /><h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/fichier.jpg" alt="File_ico"/> Fichiers</h3>
 <hr />
 	<div class="boxFichiers">
 	<?php
@@ -81,7 +81,7 @@
 		echo '	document.getElementById("detail_date").innerHTML = "'.$dirName['date'].'";';
 		echo '	document.getElementById("detail_dl").href = "'.$dirName['lien'].'";';
 		echo '	document.getElementById("detail_dl").download = "'.$dirName['nom'].'";';
-		echo '	document.getElementById("suppr_link").innerHTML = "Partage.php?action=supprFile&path='.$dirName['lien'].'";';
+		echo '	document.getElementById("suppr_link").innerHTML = "Partage.php?action=supprFile\&path='.$dirName['lien'].'";';
 		echo '}';
 	}
 ?>
@@ -109,7 +109,7 @@
 			"btnOk" : "Créer",
 			"btnNop" : "Annuler",
 			"action": "creerep",
-			"link" : "Partage.php?action=mkdir&path=<?php echo $this->getVariable('currentPath'); ?>"
+			"link" : "Partage.php?action=mkdir\&path=<?php echo $this->getVariable('currentPath'); ?>"
 
 		};
 		msg.open( "Créer un nouveau dossier dans  \".<?php echo $this->getVariable('currentPath'); ?>\"<br /><br />"+
@@ -129,7 +129,7 @@
 
 		};
 		msg.open( "Sélectionnez les fichiers à importer :<br /><br />"+
-					"<form id=\"FormUp\" action=\"Partage.php?action=up&path=<?php echo $this->getVariable('currentPath'); ?>\" method=\"post\" enctype=\"multipart/form-data\">"+
+					"<form id=\"FormUp\" action=\"Partage.php?action=up\&path=<?php echo $this->getVariable('currentPath'); ?>\" method=\"post\" enctype=\"multipart/form-data\">"+
 					"<input type=\"file\" name=\"upInput[]\" id=\"upInput\" multiple /></form><br />" , options);
 		return false;
 	});
@@ -141,7 +141,7 @@
 			"modal": "True",
 			"btnOk" : "Oui",
 			"btnNop" : "Annuler",
-			"link" : "Partage.php?action=supprAll&path=<?php echo $this->getVariable('currentPath'); ?>"
+			"link" : "Partage.php?action=supprAll\&path=<?php echo $this->getVariable('currentPath'); ?>"
 
 		};
 		msg.open( "Voulez-vous vraiment supprimer tout le dossier<br />"+
