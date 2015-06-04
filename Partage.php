@@ -6,9 +6,6 @@
 	require_once($GLOBALS['CtrlPath'].'Controller.php');
 	require_once($GLOBALS['CtrlPath'].'PartageController.php');
 	
-	system('cp /opt/php-5.5/etc/php.ini /home/u636759449/public_html/php.ini');
-	system('cp /opt/php.conf.d/u636759449.ini /home/u636759449/public_html/uBLABLA.ini');
-	
 	$controlleur = new PartageController('Partage', 'Partage de fichiers');
 
 	// Set $action en fonction de _GET
