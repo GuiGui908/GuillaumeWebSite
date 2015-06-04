@@ -4,10 +4,10 @@
 	<p>Jeu d'éhecs en C avec plusieurs modes, notamment contre l’adversaire le plus calculateur aux échecs : l’ordinateur. Vous pourrez sauvegarder votre partie en cours. Programmé en C avec GTK+.
 	Pour les détails sur l'utilisation du jeu, il existe un mode d'emploi en pdf en téléchargement ci-contre.</p>
 	<div class="jeuxImgBox">
-		<img src="Ressources/images/Chess1_s.jpg" alt="ScreenShot1"/>
-		<img src="Ressources/images/Chess2_s.jpg" alt="ScreenShot2"/>
-		<img src="Ressources/images/Chess3_s.jpg" alt="ScreenShot3"/>
-		<img src="Ressources/images/Chess4_s.jpg" alt="ScreenShot4"/>
+		<img src="Ressources/images/chess1_s.jpg" alt="ScreenShot1"/>
+		<img src="Ressources/images/chess2_s.jpg" alt="ScreenShot2"/>
+		<img src="Ressources/images/chess3_s.jpg" alt="ScreenShot3"/>
+		<img src="Ressources/images/chess4_s.jpg" alt="ScreenShot4"/>
 	</div>
 
 	<hr />
