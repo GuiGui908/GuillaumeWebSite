@@ -5,11 +5,18 @@ class Controller {
 	var $controllerPath;			// chemin du fichier controlleur
 	var $viewPath;					// chemin du fichier vue
 	var $pageName;					// Nom de l'onglet
+	var $DB;						// Base de données
 	
 	function Controller($controllerName, $pageName) {
 		$this->controllerPath = 'Controller/'.$controllerName.'Controller.php';
 		$this->viewPath = 'View/view'.$controllerName.'.php';
 		$this->pageName = $pageName;
+		// Connection à la Base de données
+		try {
+			$DB = new PDO('mysql:host=mysql.hostinger.fr;dbname=u636759449_main;charset=utf8', 'u636759449_gui', 'owk2zeNCRI4r');
+		} catch(Exception $e) {
+			die('Erreur : ' . $e->getMessage());
+		}
 	}
 
 	function setVariable($varName, $var) {
