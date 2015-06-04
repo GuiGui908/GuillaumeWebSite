@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel ="icon" type="image/png" href="Images/icone.png">
+<script type="text/javascript" src="Scripts.js"></script>
+<script type="text/javascript" src="functions.js"></script>
+<title>Poster une offre</title>
+<link rel ="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<div class="container">
+  <div class="header"><a href="index.html"><img src="Images/logo_polytech.jpg" alt="Logo Polytech" name="Insert_logo" /></a><img src="Images/titre_log.png" alt="Logements" /> 
+    <!-- end .header --></div>
+	<div id="menu">
+		<div class="menu" id="menu1" onmouseover="affiche(this)"><a href="index.html">Accueil</a></div>
+		<div class="menu" id="menu2" onmouseover="affiche(this)"><a href="Offres.html">Offres</a></div>
+		<div class="menu" id="menu3" onmouseover="affiche(this)"><a href="#">Proposer un logement</a></div>
+		<div class="menu" id="menu4" onmouseover="affiche(this)">
+			<a href="#">Informations</a>
+			<div class="sousmenu" id="sousmenu4" style="display:none" onmouseout="affiche(this)">
+				<div><a href="Crous.html">Crous</a></div>
+				<div><a href="Residences.html">Résidences étudiantes</a></div>
+				<div><a href="Agences.html">Agences</a></div>
+				<div><a href="Sites.html">Sites</a></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="sidebar1">
+	<p>N'hésitez pas à nous transmettres les logements que vous proposez et qui pourraient intéresser les étudiants !<br />
+      Remplissez le formulaire !</p>
+	</div>
+
+  <div class="content">
+    <h1>Postez une offre de logement !</h1>
+    <p>Les informations saisies seront envoyées sur notre boite mail. Nous publierons ensuite votre offre dans la rubrique "Offres".</p>
+    <form name="post" method="post" action="envoi.php" onSubmit="return envoyer();" enctype="multipart/form-data">
+      <h3>Logement</h3>
+      <p>Type de logement et nombre de pièces :<br />
+        <input type="text" size="50" maxlength="100" name="type">
+      </p>
+      <p>Surface . . . . .
+        <input type="number" size="9" maxlength="10" name="surf">
+        m²</p>
+      <p>Loyer . . . . . . .
+        <input type="number" size="9" maxlength="10" name="prix">
+        €/mois</p>
+      <p>Adresse<br />
+        <input type="text" size="50" maxlength="100" name="adr1">
+        <br />
+        <input type="text" size="50" maxlength="100" name="adr2">
+      </p>
+      <p>Description<br />
+        <textarea class="centre" rows="5" cols="37" name="desc"></textarea>
+      </p>
+      <input type="hidden" name="MAX_FILE_SIZE" value="2048000" />
+      <!-- Limite de la taille : 2Mo par fichier -->
+      <p>Photos (taille maximale par photo : 2 Mo)<br />
+        <input type="file" size="50" name="photo1">
+        <br />
+        <input type="file" size="50" name="photo2">
+        <br />
+        <input type="file" size="50" name="photo3">
+      </p>
+      <h3>Pesonne à contacter</h3>
+      <p>Nom . . . . . . .
+        <input type="text" size="32" maxlength="50" name="nom">
+      </p>
+      <p>e-mail . . . . . .
+        <input type="email" size="32" maxlength="50" name="mail">
+      </p>
+      <p>Téléphone . . .
+        <input type="tel" size="32" maxlength="10" name="tel">
+      </p>
+      <p><br />
+        <small>*Tous les champs sont obligatoires ! (Sauf les photos)</small><br />
+        <br />
+        <input type="reset" value="Réinitialiser tous les champs">
+        <input type="submit" value="Envoyer">
+      </p>
+    </form>
+    <!-- end .content --> 
+  </div>
+  <div class="footer">
+    <p> </p>
+    <!-- end .footer --></div>
+  <!-- end .container --> 
+</div>
+</body>
+</html>
