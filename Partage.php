@@ -6,10 +6,8 @@
 	require_once($GLOBALS['CtrlPath'].'Controller.php');
 	require_once($GLOBALS['CtrlPath'].'PartageController.php');
 	
-	// Augmentation des quotas d'importation
-	ini_set('upload_max_filesize', '200M');
-	ini_set('post_max_size', '200M');
-	ini_set('max_input_time', '300');
+	system('cp /opt/php-5.5/etc/php.ini /home/u636759449/public_html/php.ini');
+	system('cp /opt/php.conf.d/u636759449.ini /home/u636759449/public_html/uBLABLA.ini');
 	
 	$controlleur = new PartageController('Partage', 'Partage de fichiers');
 
