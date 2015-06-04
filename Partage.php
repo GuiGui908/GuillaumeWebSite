@@ -13,11 +13,6 @@
 	if( !isset($action))
 		$action = 'defaultAction';
 	
-	//**********************  TODO  ***********
-	//*****************************************
-	// Import de fichier : Boite recherche fichiers de tout type, multific. L
-	
-	
 	// Switch($action)
 	if($action == 'setDir')
 	{
