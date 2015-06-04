@@ -3,6 +3,13 @@ class FeedBackController extends Controller
 {
 	function defaultAction()
 	{
+		$reponse = $DB->query('SELECT * FROM FeedBack');
+		$comments = array();
+		while ($donnees = $reponse->fetch()) {
+			$comments[] = $donnees['ip'].' a commenté le '.$donnees['date'].' :<br />'.$donnees['general'].'<br />'.$donnees['photo'].'<br />'.$donnees['fichier'];
+		}
+		$reponse->closeCursor();
+		parent::setVariable('commentaires', $comments);
 	}
 
 	// mysql_real_escape_string		// Secure chars

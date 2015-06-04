@@ -38,6 +38,13 @@
 		<input class="btn" type="reset" value="Réinitialiser tous les champs">
 		</div>
     </form>
+	<br /><br /><br />
+	<h1>Commentaires</h1>
+	<?php $coms = $this->getVariable('commentaires');
+	foreach($coms as $com) {
+		echo $com;
+		
+	} ?>
 </div>
 
 <script type="text/javascript">
