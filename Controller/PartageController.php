@@ -96,7 +96,6 @@ class PartageController extends Controller
 	// VERIFIE PUIS STOCKE LES FICHIERS PASSES PAR LA METHODE POST
 	function uploadFichiers($path)
 	{
-		var_dump($_FILES["upInput"]);
 		$uploadedFiles = $this->diverse_array($_FILES["upInput"]);	
 		
 		// Vérifie que chaque fichier est transféré sans erreur

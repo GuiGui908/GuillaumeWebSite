@@ -372,15 +372,17 @@ var msg = ({
 		var sommeTaille = 0;
 		for ( var i = 0; i < fichiers.length; i ++ )
         {
-			if(fichiers[i].size > 8192) {		// limiter taille de chaque fichier < 8Mo
+			if(fichiers[i].size > 8388608) {		// limiter taille de chaque fichier < 8Mo
 				alert("Vous ne pouvez pas importer de fichier de plus de 8Mo !!\n"+fichiers[i].name+" fait "+(fichiers[i].size/1048576).toFixed(2)+" Mo");
 				return false;
 			}
 			sommeTaille += fichiers[i].size;
         }
 
-		if(sommeTaille > 8192)		// Taille totale du Up<8Mo
+		if(sommeTaille > 8388608) {		// Taille totale du Up<8Mo
 			alert("Vous ne pouvez pas uploader plus de 8Mo d'un coup.\nLa somme des tailles des fichiers est trop grande ("+(sommeTaille/1048576).toFixed(2)+" Mo");		
+			return false;
+		}
 
 		sommeTaille = sommeTaille/1048576;	// Conversion de octet vers Mo
 		sommeTaille += document.getElementById("totalSize").innerHTML;	// On ajoute la taille du dossier actuel
