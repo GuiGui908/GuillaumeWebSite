@@ -3,10 +3,18 @@ class FeedBackController extends Controller
 {
 	function defaultAction()
 	{
-		$reponse = ($this->DB)->query('SELECT * FROM FeedBack');
+		$reponse = $this->DB->query('SELECT * FROM FeedBack');
 		$comments = array();
+		$com = array();
 		while ($donnees = $reponse->fetch()) {
-			$comments[] = $donnees['ip'].' a commenté le '.$donnees['date'].' :<br />'.$donnees['general'].'<br />'.$donnees['photo'].'<br />'.$donnees['fichier'];
+			$com['ip'] = $donnees['ip'];
+			$com['dat'] = $donnees['date'];
+			$com['gen'] = $donnees['general'];
+			$com['fac'] = $donnees['facile'];
+			$com['pho'] = $donnees['photo'];
+			$com['fic'] = $donnees['fichier'];
+			$com['bug'] = $donnees['bug'];
+			$comments[] = $com;
 		}
 		$reponse->closeCursor();
 		parent::setVariable('commentaires', $comments);
@@ -38,8 +46,17 @@ class FeedBackController extends Controller
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
 
 		if(mail($destinataire, $sujet, $contenu, $header))		// Envoi
-			parent::setVariable("succes", "Informations envoyées par mail à Guillaume, Merciiii :)");
+			parent::setVariable("succes", "Informations stockées et notifiées par mail à Guillaume, Merciiii :)");
 		else
 			parent::setVariable("erreur", "Y'a eu un probleme avec l'envoi de la notification :/</br>Opération annulée...");
+	}
+	
+	function checkMotDePasse($mdp)
+	{
+		if($mdp === '7b24afc8bc80e548d66c4e7ff72171c5')		// Bon mdp = toor
+			echo 'good';
+		else
+			echo 'bad';
+		exit;
 	}
 }

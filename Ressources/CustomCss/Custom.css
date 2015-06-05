@@ -8,11 +8,24 @@ display: block;
 width: auto;
 padding: 7px 0 7px 0;
 margin: 10px 0 10px 0;
-background-color: #e5e5e5;
+background-color: #f4e6ff;
 }
 .ligne p {
 float:left;
 width: 150px;
+}
+
+.comment {		/* Ligne d'affichage des commentaires */
+padding: 7px 15px 7px 15px;
+margin: 15px 0 15px 0;
+-webkit-border-radius: 20;
+-moz-border-radius: 20;
+border-radius: 20px;
+background-color: #f4e6ff;
+}
+.louder {
+padding: 7px 15px 7px 15px;
+background-color: #e9cdff;
 }
 
 .jeuxImgBox {		/* Disposition des images dans Jeu.php */
@@ -22,4 +35,8 @@ margin-bottom: 20px;
 }
 .jeuxImgBox img {
 padding: 7px 10px 7px 10px;
+}
+
+.alignRight {
+float:right;
 }

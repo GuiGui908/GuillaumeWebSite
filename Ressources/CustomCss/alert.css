@@ -53,7 +53,6 @@
 .msgBox #msgContent {
 	padding: .4em .6em; 
 	margin: 15px 0; 
-	text-align: justify;
 	color: #514721;
 }
 /* le bouton de fermeture et son conteneur */
@@ -78,11 +77,15 @@
 	background: #e8e0ca;
 }
 
-/* le champ input (pour créer un dossier) */
+/* le champ input (pour créer un dossier / Entrer un mot de passe) */
 .msgBox input {
 	min-width: 50%;
 	margin-left: 25%;
 	margin-right: 25%;
+}
+
+.msgBox #popupErrMsg {
+	color: #ff0000;
 }
 
 /* skins

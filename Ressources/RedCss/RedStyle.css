@@ -4,7 +4,13 @@
 }
 
 body {
-background: #b4fff2;
+background-color: #a8e0f7;		/*Fond d'écran strié*/
+background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
+background-size: 13px, 29px, 37px, 53px;
+
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 15px;
 line-height: 17px;
@@ -68,7 +74,7 @@ width: 1000px;
 
 #header {
 background: #666666 url(images/header.jpg) no-repeat;
-height: 220px;
+height: 210px;
 }
 #header h1 { 
 font-size: 38px;
@@ -93,7 +99,7 @@ font-weight: 100;
 font-size: 16px;
 float: right;
 color: #EFECE0;
-padding: 188px 40px 0 20px;
+padding: 179px 40px 0 20px;
 letter-spacing: -1px;
 font-weight: 100;
 }
@@ -117,12 +123,12 @@ padding: 0 15px 0 15px;
 text-decoration: none;
 font-weight: 100;
 font-size: 18px;
-color: #aaa;
+color: #fff;
 }
 #menu ul li a:hover {
 color: #fff;
 text-decoration: none;
-text-shadow: 2px 2px 6px #909ae4;
+text-shadow: 1px 1px 10px #fff;
 }
 
 
@@ -263,7 +269,7 @@ user-select: none;
 }
 #bottom {
 background: #d4ccae url(images/bottom.jpg) no-repeat;
-padding: 10px 0;
+padding: 6px 0;
 }
 #footer {
 text-align: center;

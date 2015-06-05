@@ -12,9 +12,16 @@
 		$action = 'defaultAction';
 	
 	$controlleur = new FeedBackController('FeedBack', 'Donnnez votre avis !');
-	if($action === 'valider') {
+	if($action === 'envFeedBack') {
 		$controlleur->stockerFeedback();
 		$controlleur->envoyerNotif();
+	}
+	else if($action === 'checkpwd') {
+		$mdp = filter_input(INPUT_GET, 'pwd', FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!isset($mdp))	// erreur
+			$controlleur->checkMotDePasse('');
+		else
+			$controlleur->checkMotDePasse($mdp);
 	}
 	else
 		$controlleur->defaultAction();

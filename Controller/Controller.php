@@ -13,7 +13,10 @@ class Controller {
 		$this->pageName = $pageName;
 		// Connection à la Base de données
 		try {
-			$DB = new PDO('mysql:host=mysql.hostinger.fr;dbname=u636759449_main;charset=utf8', 'u636759449_gui', 'owk2zeNCRI4r');
+			if($GLOBALS['URL'] == 'http://localhost/guillaumewebsite/')
+				$this->DB = new PDO('mysql:host=localhost;dbname=localehostinger;charset=utf8', 'root', '');
+			else
+				$this->DB = new PDO('mysql:host=mysql.hostinger.fr;dbname=u636759449_main;charset=utf8', 'u636759449_gui', 'owk2zeNCRI4r');
 		} catch(Exception $e) {
 			echo 'Erreur : '.$e->getMessage();
 		}
