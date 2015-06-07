@@ -1,4 +1,3 @@
-// TODO trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG<br>
 <div class="left"> 
 	<h1>Jeu d'échecs</h1>
 	<p>Jeu d'éhecs en C avec plusieurs modes, notamment contre l’adversaire le plus calculateur aux échecs : l’ordinateur. Vous pourrez sauvegarder votre partie en cours. Programmé en C avec GTK+.

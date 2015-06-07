@@ -41,7 +41,7 @@
 		$arrayFic = $this->getVariable('arrayFic');
 		foreach($arrayFic as $dirName)
 		{
-			echo '<a href="javascript:clic'.$dirName['id'].'()" class="fic" id="'.$dirName['id'].'">'.$dirName['nom'].'</a>';
+			echo '<a href="javascript:clic'.$dirName['id'].'()" class="fic" id="'.$dirName['id'].'" ondblclick="javascript:DoubleClic'.$dirName['id'].'()">'.$dirName['nom'].'</a>';
 		}
 	?>
 	</div>
@@ -74,13 +74,19 @@
 	{
 		// affiche les détails correspondant en javaScript
 		echo 'function clic'.$dirName['id'].'() {';
-		echo '	document.getElementById("detail_nom").innerHTML = "'.$dirName['nom'].'";';
-		echo '	document.getElementById("detail_type").innerHTML = "'.$dirName['type'].'";';
-		echo '	document.getElementById("detail_taille").innerHTML = "'.$dirName['taille'].'";';
-		echo '	document.getElementById("detail_date").innerHTML = "'.$dirName['date'].'";';
-		echo '	document.getElementById("detail_dl").href = "'.$dirName['lien'].'";';
-		echo '	document.getElementById("detail_dl").download = "'.$dirName['nom'].'";';
-		echo '	document.getElementById("suppr_link").innerHTML = "Partage.php?action=supprFile&path='.$dirName['lien'].'";';
+		echo ' 	 document.getElementById("detail_nom").innerHTML = "'.$dirName['nom'].'";';
+		echo '	 document.getElementById("detail_type").innerHTML = "'.$dirName['type'].'";';
+		echo '	 document.getElementById("detail_taille").innerHTML = "'.$dirName['taille'].'";';
+		echo '	 document.getElementById("detail_date").innerHTML = "'.$dirName['date'].'";';
+		echo '	 document.getElementById("detail_dl").href = "'.$dirName['lien'].'";';
+		echo '	 document.getElementById("detail_dl").download = "'.$dirName['nom'].'";';
+		echo ' 	 document.getElementById("suppr_link").innerHTML = "Partage.php?action=supprFile&path='.$dirName['lien'].'";';
+		echo '}';
+
+
+		echo 'function DoubleClic'.$dirName['id'].'() {';
+		echo '	 document.getElementById("detail_dl").download = "'.$dirName['nom'].'";';
+		echo '   document.getElementById("detail_dl").click();';
 		echo '}';
 	}
 ?>
