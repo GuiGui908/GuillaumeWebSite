@@ -3,7 +3,7 @@ class FeedBackController extends Controller
 {
 	function defaultAction()
 	{
-		$reponse = $this->DB->query('SELECT * FROM FeedBack');
+		$reponse = $this->DB->query('SELECT * FROM feedback');
 		$comments = array();
 		$com = array();
 		while ($donnees = $reponse->fetch()) {
@@ -21,21 +21,27 @@ class FeedBackController extends Controller
 	}
 
 	// mysql_real_escape_string		// Secure chars
-	function stockerFeedback() {
-		$general = filter_input(INPUT_POST, 'general', FILTER_SANITIZE_SPECIAL_CHARS);
-		$facile  = filter_input(INPUT_POST, 'facile', FILTER_SANITIZE_SPECIAL_CHARS);
-		$photo   = filter_input(INPUT_POST, 'photo', FILTER_SANITIZE_SPECIAL_CHARS);
-		$fichier = filter_input(INPUT_POST, 'fichier', FILTER_SANITIZE_SPECIAL_CHARS);
-		$bug     = filter_input(INPUT_POST, 'bug', FILTER_SANITIZE_SPECIAL_CHARS);
-		
-//echo $general.'<br>'.$facile.'<br>'.$photo.'<br>'.$fichier.'<br>'.$bug;
-		
-		if(false)		// Si erreur
-			parent::setVariable("erreur", "Y'a eu un probleme avec le stockage des données :/</br>Opération annulée...");
+	function AjaxStockerFeedback() {
+		$requete = $this->DB->prepare("INSERT INTO feedback(ip, general, facile, photo, fichier, bug) VALUES(:ip, :gen, :fac, :pho, :fic, :bug)");
+		$requete -> bindParam(':ip', $_SERVER['REMOTE_ADDR']);
+		$requete -> bindParam(':gen', $_POST['general']);
+		$requete -> bindParam(':fac', $_POST['facile']);
+		$requete -> bindParam(':pho', $_POST['photo']);
+		$requete -> bindParam(':fic', $_POST['fichier']);
+		$requete -> bindParam(':bug', $_POST['bug']);
+		$requete -> execute();
+		if(!$requete)		// Si erreur
+			echo "false;Y'a eu un problème pendant l'enregistrement des données....";
 	}
 	
-	function envoyerNotif()
+	function AjaxEnvoyerNotif()
 	{
+		if(	$GLOBALS['URL'] == 'http://localhost/guillaumewebsite/' )		// On envoie rien avec localhost
+		{
+			echo "On est en Localhost. Infos stockées, Merciiii :)";
+			return;
+		}
+		
 		$boundary = md5(uniqid(microtime(), TRUE));		// clé aléatoire de limite (utile pour les pièces jointes, pas trop pour le contenu....
 		$header  = 'From: Mon site - Hostinger <noreply@siteperso.hostinger.com>'."\n";
 		$header .= 'MIME-Version: 1.0'."\n";
@@ -46,17 +52,16 @@ class FeedBackController extends Controller
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
 
 		if(mail($destinataire, $sujet, $contenu, $header))		// Envoi
-			parent::setVariable("succes", "Informations stockées et notifiées par mail à Guillaume, Merciiii :)");
+			echo "Informations stockées et notifiées par mail à Guillaume, Merciiii :)";
 		else
-			parent::setVariable("erreur", "Y'a eu un probleme avec l'envoi de la notification :/</br>Opération annulée...");
+			echo "false;Y'a eu un probleme avec l'envoi du mail de notification :/</br>Opération annulée...";
 	}
 	
-	function checkMotDePasse($mdp)
+	function AjaxCheckMotDePasse($mdp)
 	{
 		if($mdp === '7b24afc8bc80e548d66c4e7ff72171c5')		// Bon mdp = toor
 			echo 'good';
 		else
 			echo 'bad';
-		exit;
 	}
 }

@@ -16,7 +16,7 @@ class Controller {
 			if($GLOBALS['URL'] == 'http://localhost/guillaumewebsite/')
 				$this->DB = new PDO('mysql:host=localhost;dbname=localehostinger;charset=utf8', 'root', '');
 			else
-				echo "Co BD";//   $this->DB = new PDO('mysql:host=mysql.hostinger.fr;dbname=u636759449_main;charset=utf8', 'u636759449_gui', 'owk2zeNCRI4r');
+				$this->DB = new PDO('mysql:host=mysql.hostinger.fr;dbname=u636759449_main;charset=utf8', 'u636759449_gui', 'owk2zeNCRI4r');
 		} catch(Exception $e) {
 			echo 'Erreur : '.$e->getMessage();
 		}

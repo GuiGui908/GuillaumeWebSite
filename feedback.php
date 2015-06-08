@@ -12,16 +12,18 @@
 		$action = 'defaultAction';
 	
 	$controlleur = new FeedBackController('FeedBack', 'Donnnez votre avis !');
-	if($action === 'envFeedBack') {
-		$controlleur->stockerFeedback();
-		$controlleur->envoyerNotif();
+	if($action === 'AjaxEnvFeedBack') {
+		$controlleur->AjaxStockerFeedback();
+		$controlleur->AjaxEnvoyerNotif();
+		exit;		// Appel ajax donc on renvoie pas tte la page !!! On fait pas "render()"
 	}
-	else if($action === 'checkpwd') {
+	else if($action === 'AjaxCheckpwd') {
 		$mdp = filter_input(INPUT_GET, 'pwd', FILTER_SANITIZE_SPECIAL_CHARS);
 		if(!isset($mdp))	// erreur
-			$controlleur->checkMotDePasse('');
+			$controlleur->AjaxCheckMotDePasse('');
 		else
-			$controlleur->checkMotDePasse($mdp);
+			$controlleur->AjaxCheckMotDePasse($mdp);
+		exit;		// Appel ajax donc on renvoie pas tte la page !!! On fait pas "render()"
 	}
 	else
 		$controlleur->defaultAction();

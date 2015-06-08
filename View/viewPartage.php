@@ -4,11 +4,11 @@
 	$suc = $this->getVariable('succes');
 	if( isset($err) )	// Si message d'erreur
 	{
-		echo '<div class="erreur">ERREUR !! '.$err.'</div>';
+		echo '<div class="erreur" id="erreur"><img src="Ressources/images/err.jpg" alt="err.jpg" />'.$err.'</div>';
 	}
 	else if( isset($suc) )	// Si message de succès
 	{
-		echo '<div class="succes">'.$suc.'</div>';
+		echo '<div class="succes" id="succes"><img src="Ressources/images/succes.jpg" alt="succes.jpg" />'.$suc.'</div>';
 	}
 	
 	echo '<a href="';			// Arrow Left
@@ -68,6 +68,14 @@
 </div>
 
 <script type="text/javascript">
+$(document).ready( function() {		// Efface les messages (erreur ou succes) au bout de 4s
+	if($('#erreur').length > 0) 
+		setTimeout("$('#erreur').css('display', 'none');", 4000);
+	else if($('#succes').length > 0) 
+		setTimeout("$('#succes').css('display', 'none');", 4000);
+});
+
+
 <?php
 	// Crée les fonctions apellées lorsqu'on clique sur un fichier
 	foreach($arrayFic as $dirName)

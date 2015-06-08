@@ -373,7 +373,7 @@ var msg = ({
 		$.ajax({
 			url : 'feedback.php',
 			type : 'GET',
-			data : 'action=checkpwd&pwd=' + mdp,
+			data : 'action=AjaxCheckpwd&pwd=' + mdp,
 			dataType : 'text',
 			success : function(resultat, statut) {
 				if(resultat === 'good') {
@@ -426,7 +426,10 @@ var msg = ({
 					"La capacité maximale de stockage est d' 1Go, et "+document.getElementById("totalSize").innerHTML+" Mo sont déjà utilisés");
 			return false;
 		}
-
+		
+		$('.adressBar').append('<div class="info"><img src="Ressources/images/info.jpg" alt="info.jpg" />'+
+							   '<img src=\"Ressources/images/wait.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />'+
+							   'Upload des fichiers en cours ....<br />Veuillez patienter' );
 		document.getElementById("FormUp").submit();
 		msg.close();
 	},
@@ -440,9 +443,10 @@ var msg = ({
 		var inputField = document.getElementById("dirNewFolder");
 		if(inputField.value == "")
 			document.getElementById("aBtnSubmit").href = "#";
-		else
+		else {
 			document.getElementById("aBtnSubmit").href += inputField.value;
-		msg.close();
+			msg.close();
+		}
 	},
 	
 	

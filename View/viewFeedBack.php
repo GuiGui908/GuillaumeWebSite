@@ -1,23 +1,24 @@
 <?php
 	$err = $this->getVariable('erreur');
 	$suc = $this->getVariable('succes');
-	if( isset($err) )	// Si message d'erreur
-	{
-		echo '<div class="erreur">ERREUR !! '.$err.'</div>';
-	}
-	else if( isset($suc) )	// Si message de succès
-	{
-		echo '<div class="succes">'.$suc.'</div>';
-	}
+	echo '<div class="erreur" id="erreur" style="display:none;"><img src="Ressources/images/err.jpg" alt="err.jpg" />';		// Ona  besoin quel e div soit tjrs présent psk on va y accéder avec le JS
+	if(isset($err)) echo $err;		// Si message d'erreur
+
+	echo '</div><div class="succes" id="succes" style="display:none;"><img src="Ressources/images/succes.jpg" alt="succes.jpg" />';
+	if(isset($suc)) echo $suc;		// Si message de succès
+
+	echo '</div><div class="info" id="info" style="display:none;"><img src="Ressources/images/info.jpg" alt="info.jpg" />';
+	if(isset($info)) echo $info;	// Si message d'information
+	echo '</div>';
 ?>
 	<div class="left" id="donner"> 
 		<a href="#" class="btn alignRight" onclick="displayComments();">Voir les avis</a>
 		<h1>Donnez votre avis ici ! <img src="Ressources/images/clinOeil.jpg" alt=";)"/></h1>
 		<h3>Vos réflexions sont anonymes et stockées dans la base de données. Ca aide à améliorer le design !</h3>
 		<br />
-		<form name="post" method="post" action="feedback.php?action=envFeedBack" onSubmit="return envoyer();" enctype="multipart/form-data">
+		<form id="fomrcom" method="post" action="feedback.php?action=AjaxEnvFeedBack">
 			<div class="ligne"><p>Que pensez-vous du site en général ? des couleurs ?</p>
-				<textarea class="centre" rows="3" cols="55" name="general"></textarea>
+				<textarea class="centre" rows="3" cols="55" name="general" ></textarea>
 			</div>
 			<div class="ligne"><p>Facile à utiliser ?</p>
 				<input type="radio" name="facile" value="y" />Oui&nbsp;&nbsp;
@@ -26,15 +27,15 @@
 				<input type="radio" id="NoOp" name="facile" value="null" checked />Pas d'avis 
 			</div>
 			<div class="ligne"><p>A propos de la page Photos :</p>
-				<textarea class="centre" rows="2" cols="55" name="photo"></textarea>
+				<textarea class="centre" rows="2" cols="55" name="photo" ></textarea>
 			</div>
 			<div class="ligne"><p>A propos de la section d'échange de fichiers :</p>
-				<textarea class="centre" rows="2" cols="55" name="fichier"></textarea>
+				<textarea class="centre" rows="2" cols="55" name="fichier" ></textarea>
 			</div>
 			<div class="ligne"><p>Un bug à signaler ?</p>
-				<textarea class="centre" rows="2" cols="55" name="bug"></textarea>
+				<textarea class="centre" rows="2" cols="55" name="bug" ></textarea>
 			</div>
-			<a href="#" class="btn alignRight" onclick="post.submit();">Valider et envoyer</a>
+			<input class="btn alignRight" type="submit" value="Valider et envoyer">
 		</form>
 	</div>
 	<div class="left" id="voir">
@@ -60,18 +61,55 @@
 		} ?>
 	</div>
 <script type="text/javascript">
-	document.getElementById('voir').style.display = 'none';
-	function envoyer()
-	{
-		with(window.document.post)
+
+	$(document).ready(function() {			// Quand le DOM est prêt
+		document.getElementById('voir').style.display = 'none';
+		
+		// Soumission Ajax du formulaire (http://chez-syl.fr/2012/01/envoyer-un-formulaire-en-ajax-avec-jquery-et-json/)
+		$('#fomrcom').submit(function()
 		{
-			// Si tous les textArea sont vides et que "Pas d'avis" est coché
-			if(general.value.length==0 && photo.value.length==0 && fichier.value.length==0 && bug.value.length==0 && document.getElementById("NoOp").checked)
+			// Véréfication des champs : Si au moins l'un a été renseigné, on envoi le com
+			if( $("textarea[name='general']").val().length != 0  ||
+				$("textarea[name='photo']").val().length != 0  ||
+				$("textarea[name='fichier']").val().length != 0  ||
+				$("textarea[name='bug']").val().length != 0  ||
+				$("input[name='facile']:checked").val() != "null" )
 			{
-				return false;
+				document.getElementById('info').innerHTML += "<img src=\"Ressources/images/wait.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />Envoi du formulaire en cours ....";
+				document.getElementById('info').style.display = "block";
+
+				// Envoi de la requête HTTP en mode asynchrone
+				$.ajax({
+					url: $(this).attr('action'), 		// Le nom du fichier indiqué dans le formulaire
+					type: $(this).attr('method'), 	// La méthode indiquée dans le formulaire (get ou post)
+					data: $(this).serialize(),		// Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+					dataType: "text",
+					success: function(resultat) {
+						$('#fomrcom')[0].reset();
+						document.getElementById('info').style.display = "none";
+						if(resultat.substr(0, 6) == 'false;')
+						{
+							document.getElementById('erreur').innerHTML += resultat.substr(7);	// substr(7) est le message d'erreur
+							document.getElementById('erreur').style.display = "block";
+							setTimeout("document.getElementById('erreur').style.display = 'none';", 4000);
+						}
+						else {
+							document.getElementById('succes').innerHTML += resultat;
+							document.getElementById('succes').style.display = "block";
+							setTimeout("document.getElementById('succes').style.display = 'none';", 4000);
+						}
+					},
+					error: function() {
+						document.getElementById('info').style.display = "none";
+						document.getElementById('erreur').innerHTML += "Erreur pendant l'appel Ajax :( Le formulaire n'a pas pu être transmis :/";
+						document.getElementById('erreur').style.display = "block";
+						setTimeout("document.getElementById('erreur').style.display = 'none';", 4000);
+					}
+				});
 			}
-		}
-	}
+			return false;
+		});
+	});
 	
 	function displayAvis()
 	{
