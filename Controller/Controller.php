@@ -20,7 +20,6 @@ class Controller {
 		} catch(Exception $e) {
 			echo 'Erreur : '.$e->getMessage();
 		}
-		var_dump($this->DB);
 	}
 
 	function setVariable($varName, $var) {
