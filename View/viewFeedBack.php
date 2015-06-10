@@ -129,6 +129,7 @@
 		};
 		msg.open( "Pour voir les commentaires vous devez entrer le mot de passe admin :<br />"+
 					"<span id=\"popupErrMsg\"></span><br /></br>"+
+					"<img id=\"gifPatience\" src=\"Ressources/images/waitWhite.gif\" alt=\"<Veuillez patienter svp...>\" style=\"text-align:center;display:none;\"/>"+
 					"<input type=\"password\" id=\"pwd\" placeholder=\"Mot de passe\" /><br />" , options);
 	}
 </script>

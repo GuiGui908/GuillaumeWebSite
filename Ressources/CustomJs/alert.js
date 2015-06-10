@@ -369,6 +369,9 @@ var msg = ({
 		var mdp = document.getElementById("pwd").value;
 		mdp = CryptoJS.MD5(mdp);
 		
+		// Affiche une patience
+		$('#gifPatience').css('display', 'block');
+		
 		// Appel Ajax pour vérifier que le mdp est ok
 		$.ajax({
 			url : 'feedback.php',
@@ -376,18 +379,20 @@ var msg = ({
 			data : 'action=AjaxCheckpwd&pwd=' + mdp,
 			dataType : 'text',
 			success : function(resultat, statut) {
+				$('#gifPatience').css('display', 'none');		// Efface la patience
 				if(resultat === 'good') {
 					document.getElementById('voir').style.display = 'block';
 					document.getElementById('donner').style.display = 'none';
 					msg.close();
 				} else {
-					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !';
+					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !'+resultat+'  '+status;
 					document.getElementById("pwd").value = '';
 					document.getElementById("pwd").focus();
 					return false;
 				}
 			},
 			error : function(resultat, statut, erreur){
+				$('#gifPatience').css('display', 'none');		// Efface la patience
 				document.getElementById('popupErrMsg').innerHTML = 'Erreur dans la requête Ajax ! Veuillez réessayer<br />Err : '+resultat;
 				return false;
 			}
