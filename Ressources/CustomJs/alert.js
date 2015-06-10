@@ -427,8 +427,9 @@ var msg = ({
 			return false;
 		}
 		
-		$('.info').append( 'Upload des fichiers en cours ....<br />Veuillez patienter' );
-		$('.info').css('display', 'block');
+		$('.adressBar').append('<div class="info"><img src="Ressources/images/info.jpg" alt="<info.jpg>" />'+
+							   '<img src=\"Ressources/images/wait.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />'+
+							   'Upload des fichiers en cours ....<br />Veuillez patienter' );
 		document.getElementById("FormUp").submit();
 		msg.close();
 	},

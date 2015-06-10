@@ -10,8 +10,6 @@
 	{
 		echo '<div class="succes" id="succes"><img src="Ressources/images/succes.jpg" alt="<succes.jpg>" />'.$suc.'</div>';
 	}
-	echo '<div class="info" style="display:none;"><img src="/Ressources/images/info.jpg" alt="<info.jpg>" />'.
-	     '<img src=\"/Ressources/images/wait.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />';
 	
 	echo '<a href="';			// Arrow Left
 	if($this->getVariable('returnPath') == '')
