@@ -1,13 +1,13 @@
 <?php
 	$err = $this->getVariable('erreur');
 	$suc = $this->getVariable('succes');
-	echo '<div class="erreur" id="erreur" style="display:none;"><img src="Ressources/images/err.jpg" alt="err.jpg" />';		// Ona  besoin quel e div soit tjrs présent psk on va y accéder avec le JS
+	echo '<div class="erreur" id="erreur" style="display:none;"><img src="Ressources/images/err.jpg" alt="<err.jpg>" />';		// Ona  besoin quel e div soit tjrs présent psk on va y accéder avec le JS
 	if(isset($err)) echo $err;		// Si message d'erreur
 
-	echo '</div><div class="succes" id="succes" style="display:none;"><img src="Ressources/images/succes.jpg" alt="succes.jpg" />';
+	echo '</div><div class="succes" id="succes" style="display:none;"><img src="Ressources/images/succes.jpg" alt="<succes.jpg>" />';
 	if(isset($suc)) echo $suc;		// Si message de succès
 
-	echo '</div><div class="info" id="info" style="display:none;"><img src="Ressources/images/info.jpg" alt="info.jpg" />';
+	echo '</div><div class="info" id="info" style="display:none;"><img src="Ressources/images/info.jpg" alt="<info.jpg>" />';
 	if(isset($info)) echo $info;	// Si message d'information
 	echo '</div>';
 ?>

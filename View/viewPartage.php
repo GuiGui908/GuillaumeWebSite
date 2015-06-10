@@ -4,26 +4,28 @@
 	$suc = $this->getVariable('succes');
 	if( isset($err) )	// Si message d'erreur
 	{
-		echo '<div class="erreur" id="erreur"><img src="Ressources/images/err.jpg" alt="err.jpg" />'.$err.'</div>';
+		echo '<div class="erreur" id="erreur"><img src="Ressources/images/err.jpg" alt="<err.jpg>" />'.$err.'</div>';
 	}
 	else if( isset($suc) )	// Si message de succès
 	{
-		echo '<div class="succes" id="succes"><img src="Ressources/images/succes.jpg" alt="succes.jpg" />'.$suc.'</div>';
+		echo '<div class="succes" id="succes"><img src="Ressources/images/succes.jpg" alt="<succes.jpg>" />'.$suc.'</div>';
 	}
+	echo '<div class="info" style="display:none;"><img src="/Ressources/images/info.jpg" alt="<info.jpg>" />'.
+	     '<img src=\"/Ressources/images/wait.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />';
 	
 	echo '<a href="';			// Arrow Left
 	if($this->getVariable('returnPath') == '')
 		echo '#">';
 	else
 		echo 'Partage.php?action=setDir&path='.$this->getVariable('returnPath').'">';
-	echo '	<img src="'.$GLOBALS['URL'].'/Ressources/images/arrowLeft.jpg" alt="Back"/>';
+	echo '	<img src="'.$GLOBALS['URL'].'/Ressources/images/arrowLeft.jpg" alt="<Back>"/>';
 	echo '</a>';	
 	echo '<b>.'.$this->getVariable('currentPath').'</b>';		// Chemin
 ?>
 </div>
 
 <div class="left noselect">
-<h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/dossier.jpg" alt="Rep_ico"/> Dossiers</h3>
+<h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/dossier.jpg" alt="<Rep_ico>"/> Dossiers</h3>
 <hr />
 	<div class="boxFichiers">
 	<?php
@@ -34,7 +36,7 @@
 		}
 	?>
 	</div>
-<br /><h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/fichier.jpg" alt="File_ico"/> Fichiers</h3>
+<br /><h3><img src="<?php echo $GLOBALS['URL']; ?>/Ressources/images/fichier.jpg" alt="<File_ico>"/> Fichiers</h3>
 <hr />
 	<div class="boxFichiers">
 	<?php
