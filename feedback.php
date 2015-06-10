@@ -18,11 +18,11 @@
 		exit;		// Appel ajax donc on renvoie pas tte la page !!! On fait pas "render()"
 	}
 	else if($action === 'AjaxCheckpwd') {
-		$mdp = filter_input(INPUT_GET, 'pwd', FILTER_SANITIZE_SPECIAL_CHARS);
-		if(!isset($mdp))	// erreur
+		echo $_GET['pwd'];
+		if(!isset($_GET['pwd']))	// erreur
 			$controlleur->AjaxCheckMotDePasse('');
 		else
-			$controlleur->AjaxCheckMotDePasse($mdp);
+			$controlleur->AjaxCheckMotDePasse($_GET['pwd']);
 		exit;		// Appel ajax donc on renvoie pas tte la page !!! On fait pas "render()"
 	}
 	else

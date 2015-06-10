@@ -388,7 +388,7 @@ var msg = ({
 				}
 			},
 			error : function(resultat, statut, erreur){
-				document.getElementById('popupErrMsg').innerHTML = 'Erreur dans la requête Ajax ! Veuillez réessayer';
+				document.getElementById('popupErrMsg').innerHTML = 'Erreur dans la requête Ajax ! Veuillez réessayer<br />Err : '+resultat;
 				return false;
 			}
 		});

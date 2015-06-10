@@ -4,6 +4,7 @@ class FeedBackController extends Controller
 	function defaultAction()
 	{
 		$reponse = $this->DB->query('SELECT * FROM feedback');
+		var_dump($reponse);
 		$comments = array();
 		$com = array();
 		while ($donnees = $reponse->fetch()) {
