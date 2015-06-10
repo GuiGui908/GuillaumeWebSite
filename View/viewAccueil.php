@@ -23,18 +23,19 @@ Les deux mêmes endroits à une période de l'année opposée.
 	<li>Le site est une page blanche --"</li>
 	<li>Validation w3c qui valide tjrs le même fichier racine et pas les pages</li>
 	<li></li>
-	<li></li>
-	</ul><br /><br />
+	</ul><br />
 	<h3>Mémo (actions en cours)</h3>
 	<ul>
 	<li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
-	<li>FeedBack : Stocker dans la BD apres validation</li>
 	<li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
 	<li>Jeux : Développer le 2048 interface graphique</li>
+	<li></li>
+	</ul>
+	<br />
+	<h3>Si j'ai vraiment rien à faire</h3>
+	<ul>
 	<li>Partage : Mettre une barre de chargement Ajax</li>
-	<li></li>
-	<li></li>
-	<li></li>
+	<li>FeedBack : Charger en Ajax la page de consultation des avis. Pr corriger le bug du "Je poste et je regarde direct les avis" => pas màj</li>
 	<li></li>
 	</ul>
 </div>
