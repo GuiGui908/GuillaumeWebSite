@@ -9,7 +9,7 @@
 
 	echo '</div><div class="info" id="info" style="display:none;">'.
 		 '<img src="Ressources/images/info.jpg" alt="<info.jpg>" />'.
-		 '<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" style=\"width:30px;\" />'.
+		 '<img src="Ressources/images/waitBlue.gif" alt="<Patientez svp>" style="width:30px;" />'.
 		 'Envoi du formulaire en cours .... </div>';
 ?>
 	<div class="left" id="donner"> 

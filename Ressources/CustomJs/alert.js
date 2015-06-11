@@ -385,7 +385,7 @@ var msg = ({
 					document.getElementById('donner').style.display = 'none';
 					msg.close();
 				} else {
-					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !'+status;
+					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !';
 					document.getElementById("pwd").value = '';
 					document.getElementById("pwd").focus();
 					return false;

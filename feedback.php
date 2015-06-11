@@ -18,7 +18,6 @@
 		exit;		// Appel ajax donc on renvoie pas tte la page !!! On fait pas "render()"
 	}
 	else if($action === 'AjaxCheckpwd') {
-		echo $_GET['pwd'];
 		if(!isset($_GET['pwd']))	// erreur
 			$controlleur->AjaxCheckMotDePasse('');
 		else

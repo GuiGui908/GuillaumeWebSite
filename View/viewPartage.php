@@ -12,8 +12,8 @@
 	}
 	echo '<div class="info" style="display:none;">'.
 		 '<img src="Ressources/images/info.jpg" alt="<info.jpg>" />'.
-		 '<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" style=\"width:30px;\" />'.
-		 '<span id="info"></span> </div>'.
+		 '<img src="Ressources/images/waitBlue.gif" alt="<Patientez svp>" style="width:30px;" />'.
+		 '<span id="info"></span> </div>';
 	
 	echo '<a href="';			// Arrow Left
 	if($this->getVariable('returnPath') == '')
