@@ -75,7 +75,7 @@
 				$("textarea[name='bug']").val().length != 0  ||
 				$("input[name='facile']:checked").val() != "null" )
 			{
-				document.getElementById('info').innerHTML += "<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />Envoi du formulaire en cours ....";
+				document.getElementById('info').innerHTML += "<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" style=\"width:30px;\" />Envoi du formulaire en cours ....";
 				document.getElementById('info').style.display = "block";
 
 				// Envoi de la requête HTTP en mode asynchrone
