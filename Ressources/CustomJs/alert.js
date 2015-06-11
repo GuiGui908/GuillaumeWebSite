@@ -385,7 +385,7 @@ var msg = ({
 					document.getElementById('donner').style.display = 'none';
 					msg.close();
 				} else {
-					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !'+resultat+'  '+status;
+					document.getElementById("popupErrMsg").innerHTML = 'Mauvais mot de passe !'+status;
 					document.getElementById("pwd").value = '';
 					document.getElementById("pwd").focus();
 					return false;
@@ -432,9 +432,8 @@ var msg = ({
 			return false;
 		}
 		
-		$('.adressBar').append('<div class="info"><img src="Ressources/images/info.jpg" alt="<info.jpg>" />'+
-							   '<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" <style=\"width:30px;\" />'+
-							   'Upload des fichiers en cours ....<br />Veuillez patienter' );
+		$('#info').html('Upload des fichiers en cours ....<br />Veuillez patienter');
+		$('.info').show();
 		document.getElementById("FormUp").submit();
 		msg.close();
 	},

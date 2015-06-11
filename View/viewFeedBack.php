@@ -7,9 +7,10 @@
 	echo '</div><div class="succes" id="succes" style="display:none;"><img src="Ressources/images/succes.jpg" alt="<succes.jpg>" />';
 	if(isset($suc)) echo $suc;		// Si message de succès
 
-	echo '</div><div class="info" id="info" style="display:none;"><img src="Ressources/images/info.jpg" alt="<info.jpg>" />';
-	if(isset($info)) echo $info;	// Si message d'information
-	echo '</div>';
+	echo '</div><div class="info" id="info" style="display:none;">'.
+		 '<img src="Ressources/images/info.jpg" alt="<info.jpg>" />'.
+		 '<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" style=\"width:30px;\" />'.
+		 'Envoi du formulaire en cours .... </div>';
 ?>
 	<div class="left" id="donner"> 
 		<a href="#" class="btn alignRight" onclick="displayComments();">Voir les avis</a>
@@ -75,7 +76,6 @@
 				$("textarea[name='bug']").val().length != 0  ||
 				$("input[name='facile']:checked").val() != "null" )
 			{
-				document.getElementById('info').innerHTML += "<img src=\"Ressources/images/waitBlue.gif\" alt=\"<Patientez svp>\" style=\"width:30px;\" />Envoi du formulaire en cours ....";
 				document.getElementById('info').style.display = "block";
 
 				// Envoi de la requête HTTP en mode asynchrone

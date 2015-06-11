@@ -43,11 +43,11 @@ class FeedBackController extends Controller
 		}
 		
 		$boundary = md5(uniqid(microtime(), TRUE));		// clé aléatoire de limite (utile pour les pièces jointes, pas trop pour le contenu....
-		$header  = 'From: Mon site - Hostinger <noreply@siteperso.hostinger.com>'."\n";
+		$header  = 'From: FeedBack - mon site hostinger <noreply@siteperso.hostinger.com>'."\n";
 		$header .= 'MIME-Version: 1.0'."\n";
 		$header .= 'Content-Type: multipart/mixed; boundary='.$boundary."\n\n";
 		$destinataire = 'guigui908b@gmail.com';
-		$sujet = 'FeedBack - Mon site';
+		$sujet = 'FeedBack de '.$_SERVER['REMOTE_ADDR'].'- Mon site';
 		
 		$contenu = "Wesh ! Y'a un mec qui a mis un feedBack sur le site ! Va voir !";
 
