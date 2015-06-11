@@ -20,8 +20,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <div class="left">
 	<h3>Bug connus</h3>
 	<ul>
-	<li>Le site est une page blanche --"</li>
-	<li>Validation w3c qui valide tjrs le même fichier racine et pas les pages</li>
+	<li>Télécharger des.exe fait une ereur 403</li>
 	<li></li>
 	</ul><br />
 	<h3>Mémo (actions en cours)</h3>

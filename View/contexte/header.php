@@ -14,7 +14,7 @@
 	<!--  IMPORT DES SCRIPTS JS  -->
 	<script type="text/javascript" src="Ressources/CustomJs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-	<script type="text/javascript" src="Ressources/CustomJs/alert.js"></script>
+	<script type="text/javascript" src="Ressources/CustomJs/alert-min.js"></script>
 
 </head>
 <body>

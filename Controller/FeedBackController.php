@@ -36,7 +36,6 @@ class FeedBackController extends Controller
 	
 	function AjaxEnvoyerNotif()
 	{
-		sleep(1);
 		if(	$GLOBALS['URL'] == 'http://localhost/guillaumewebsite/' )		// On envoie rien avec localhost
 		{
 			echo "On est en Localhost. Infos stockées, Merciiii :)";
@@ -60,7 +59,6 @@ class FeedBackController extends Controller
 	
 	function AjaxCheckMotDePasse($mdp)
 	{
-		sleep(1);
 		if($mdp === '7b24afc8bc80e548d66c4e7ff72171c5')		// Bon mdp = toor
 			echo 'good';
 		else
