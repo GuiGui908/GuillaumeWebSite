@@ -22,11 +22,13 @@
 
 	<hr />
 
-	<h1>2048 (comming soon)</h1>
-	<p>Encore en dévelopement, mais ça arrive cet été !</p>
+	<h1>2048</h1>
+	<p>Célèbre jeux lancé sur mobile et qui a très vite conquis le coeur des jeunes. C'est un jeu tout simple, déstressant. Essayez-le !<br />
+	Il a été développé en Java, avec JavaFX pour ce qui concerne l'interface graphique.</p>
 	<div class="jeuxImgBox">
-		<img src="Ressources/images/2048.png" alt="ScreenShot1" />
-		</div>
+		<a href="Ressources/images/2048_1.jpg"><img src="Ressources/images/2048_1_s.jpg" alt="ScreenShot1"/></a>
+		<a href="Ressources/images/2048_2.jpg"><img src="Ressources/images/2048_2_s.jpg" alt="ScreenShot2"/></a>
+	</div>
 </div>
 <div class="right"> 
 	<h3>Jeu d'échecs</h3>
@@ -44,6 +46,10 @@
 	</ul>
 	<br />
 	<h3>2048</h3>
+	<ul>
+		<li><a href="<?php echo $this->getVariable('Setup2048'); ?>">Setup Windows</a></li>
+		<li><a href="<?php echo $this->getVariable('Src2048'); ?>">Code source (projet Eclipse)</a></li>
+	</ul>
 	<br />
 	<br />
 	<br />

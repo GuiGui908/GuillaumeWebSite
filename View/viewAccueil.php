@@ -16,25 +16,31 @@ Un chalet après une averse de neige à Chicoutimi ; Les calanques d'En-Vaux ent
 </div>
 <div class="left"> 
 Les deux mêmes endroits à une période de l'année opposée.
-</div>
-<div class="left">
-	<h3>Bug connus</h3>
-	<ul>
-	<li>Télécharger des.exe fait une ereur 403</li>
-	<li></li>
-	</ul><br />
-	<h3>Mémo (actions en cours)</h3>
-	<ul>
-	<li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
-	<li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
-	<li>Jeux : Développer le 2048 interface graphique</li>
-	<li></li>
-	</ul>
-	<br />
-	<h3>Si j'ai vraiment rien à faire</h3>
-	<ul>
-	<li>Partage : Mettre une barre de chargement Ajax</li>
-	<li>FeedBack : Charger en Ajax la page de consultation des avis. Pr corriger le bug du "Je poste et je regarde direct les avis" => pas màj</li>
-	<li></li>
-	</ul>
+<br /><br /><br />
+<br /><br /><br />
+<h3>Bug connus</h3>
+<hr/>
+<ul>
+<li>Télécharger des .exe .dll fait une ereur 403</li>
+<li>La date des avis se stocke plus correctement :'(</li>
+<li>Les fichiers et les dossiers sont triés par ordre de création et pas alphabétique dans PARTAGE</li>
+<li></li>
+<li></li>
+</ul><br />
+<h3>Mémo (actions en cours)</h3>
+<hr/>
+<ul>
+<li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
+<li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
+<li>Jeux : Développer le 2048 interface graphique</li>
+<li></li>
+</ul>
+<br />
+<h3>Si j'ai vraiment rien à faire</h3>
+<hr/>
+<ul>
+<li>Partage : Mettre une barre de chargement Ajax</li>
+<li>FeedBack : Charger en Ajax la page de consultation des avis. Pr corriger le bug du "Je poste et je regarde direct les avis" => pas màj</li>
+<li></li>
+</ul>
 </div>

@@ -9,5 +9,8 @@ class JeuController extends Controller
 
 		parent::setVariable('SetupOthelloWin', 'Ressources/Setup_Othello.zip');
 		parent::setVariable('SrcOthello', 'Ressources/Othello_Sources.zip');
+
+		parent::setVariable('Setup2048', 'Ressources/Lancer_2048.jar');
+		parent::setVariable('Src2048', 'Ressources/2048Src.zip');
 	}
 }
