@@ -21,9 +21,6 @@ Les deux mêmes endroits à une période de l'année opposée.
 <h3>Bug connus</h3>
 <hr/>
 <ul>
-<li>Télécharger des .exe .dll fait une ereur 403</li>
-<li>La date des avis se stocke plus correctement :'(</li>
-<li>Les fichiers et les dossiers sont triés par ordre de création et pas alphabétique dans PARTAGE</li>
 <li></li>
 <li></li>
 </ul><br />
@@ -32,7 +29,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <ul>
 <li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
 <li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
-<li>Jeux : Développer le 2048 interface graphique</li>
+<li>Photo : Faire toute la page</li>
 <li></li>
 </ul>
 <br />

@@ -1,8 +1,4 @@
 <div class="left"> 
-<p>Le québec est la seule province Francophone du Canada, situé sur la côte Est de l'Amérique. J'ai donc expérimenté un mode de vie "à l'Américaine", car les Etats-Unis ont une forte influence sur le continent. Les cours à l'université étaient dispensés sur le modèle Anglo-Saxon avec beaucoup de travail personnel. J'ai donc réalisé de projets d'envergure plus grande puisqu'ils duraient toute une session (4 mois). Je suis donc plus apte à travailler en équipe (Git) et à répartir les tâches (Modélisation UML, répartition du travail). Enfin un cours de gestion de projets m'a initié au management d'un projet du point de vue du PmBok et des normes internationales.
-</p>
-
-<br /><br />
 <br />Fonctionnalités Gauche:
 <br />voir un album
 <br />	propriétaire

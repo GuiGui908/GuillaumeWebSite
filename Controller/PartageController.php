@@ -32,8 +32,8 @@ class PartageController extends Controller
 				}
 				$ii++;
 			}
-			//usort($arrayDir, "my_sort_arrayFic");	// Tri
-			//usort($arrayFic, "my_sort_arrayFic");	// Tri
+			usort($arrayDir, array('PartageController', 'my_sort_arrayFic'));	// Tri
+			usort($arrayFic, array('PartageController', 'my_sort_arrayFic'));	// Tri
 
 			closedir($dossier);
 		}
@@ -53,9 +53,9 @@ class PartageController extends Controller
 	}
 	
 	// FONCTION DE COMPARAISON PERSONNELLE POUR TRIER LES FICHIERS ET LES DOSSIERS PAR ORDRE ALPHABETIQUE
-	function my_sort_arrayFic($a, $b)
+	static function my_sort_arrayFic($a, $b)
 	{
-		return strcmp($a['nom'], $b['nom']);
+		return strcasecmp($a['nom'], $b['nom']);
 	}
 	
 	function typeFichier($name)
