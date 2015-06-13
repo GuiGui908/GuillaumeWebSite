@@ -7,13 +7,13 @@ class FeedBackController extends Controller
 		$comments = array();
 		$com = array();
 		while ($donnees = $reponse->fetch()) {
-			$com['ip'] = $donnees['ip'];
-			$com['dat'] = $donnees['date'];
-			$com['gen'] = $donnees['general'];
-			$com['fac'] = $donnees['facile'];
-			$com['pho'] = $donnees['photo'];
-			$com['fic'] = $donnees['fichier'];
-			$com['bug'] = $donnees['bug'];
+			$com['ip']  = htmlspecialchars($donnees['ip']);
+			$com['dat'] = htmlspecialchars($donnees['date']);
+			$com['gen'] = htmlspecialchars($donnees['general']);
+			$com['fac'] = htmlspecialchars($donnees['facile']);
+			$com['pho'] = htmlspecialchars($donnees['photo']);
+			$com['fic'] = htmlspecialchars($donnees['fichier']);
+			$com['bug'] = htmlspecialchars($donnees['bug']);
 			$comments[] = $com;
 		}
 		$reponse->closeCursor();
