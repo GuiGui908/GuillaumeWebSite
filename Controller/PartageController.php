@@ -20,9 +20,9 @@ class PartageController extends Controller
 				{
 					$fic['id'] = 'fic'.$ii;
 					$fic['nom'] = $name;
-					$fic['type'] = filetype($dirPath.'/'.$name);
+					$fic['type'] = $this->typeFichier($name);
 					$fic['taille'] = (string) number_format( filesize($dirPath.'/'.$name) / 1048576 , 3, '.', ' ');
-					$fic['date'] = date('d M Y H:i', filemtime($dirPath.'/'.$name));
+					$fic['date'] = date('d M Y H:i', filemtime($dirPath.$name));
 					$fic['lien'] = $dirPath.$name;
 					
 					if(is_dir($dirPath.'/'.$name))
@@ -32,6 +32,9 @@ class PartageController extends Controller
 				}
 				$ii++;
 			}
+			//usort($arrayDir, "my_sort_arrayFic");	// Tri
+			//usort($arrayFic, "my_sort_arrayFic");	// Tri
+
 			closedir($dossier);
 		}
 		else
@@ -47,6 +50,30 @@ class PartageController extends Controller
 		parent::setVariable('returnPath', substr(dirname($dirPath).'/', 29));
 		parent::setVariable('currentPath', substr($dirPath, 29));
 		parent::setVariable('totalSize', $totalSize);
+	}
+	
+	// FONCTION DE COMPARAISON PERSONNELLE POUR TRIER LES FICHIERS ET LES DOSSIERS PAR ORDRE ALPHABETIQUE
+	function my_sort_arrayFic($a, $b)
+	{
+		return strcmp($a['nom'], $b['nom']);
+	}
+	
+	function typeFichier($name)
+	{
+		$type = 'fichier ';
+		$indice = strrpos($name, '.');
+		if($indice) {
+			$indice = substr($name, $indice+1);
+			if($indice=='bmp' || $indice=='gif' || $indice=='ico' || $indice=='jpg' || $indice=='jpeg' || $indice=='png') $type = 'image';
+			else if($indice=='mp3' || $indice=='wav' || $indice=='wma' || $indice=='flac') $type = 'musique';
+			else if($indice=='avi' || $indice=='flv' || $indice=='mpg' || $indice=='mpeg') $type = 'vidéo';
+			else if($indice=='rar' || $indice=='tar' || $indice=='gz' || $indice=='zip' || $indice=='7z') $type = 'archive';
+			else if($indice=='doc' || $indice=='docx' || $indice=='odt' || $indice=='txt') $type = 'texte';
+			else if($indice=='xls' || $indice=='xlsx' || $indice=='ods') $type = 'calc';
+			else if($indice=='java' || $indice=='h' || $indice=='cpp' || $indice=='c' || $indice=='jar') $type = 'programmation';
+			else $type .= $indice;
+		}
+		return $type;
 	}
 
 	// CALCULE RECURSIVEMENT LA TAILLE DU DOSSIER REP
@@ -112,13 +139,20 @@ class PartageController extends Controller
 		{
 			$succesMsg = '';
 			$cpt = 0;
+			$virgule = '';
 			foreach($uploadedFiles as $file)
 			{
-				if(file_exists($path.$file['name'])) { // Préviens les doublons
-					move_uploaded_file($file['tmp_name'], $path.$file['name'].' (2)');	// Déplace le fichier
+				$i = 2;
+				$fileName = $file['name'];
+				while(file_exists($path.$fileName)) { // Préviens les doublons
+					$indiceLastPt = strrpos($file['name'], '.');
+					$fileName = substr_replace($file['name'], " ($i)", $indiceLastPt, 0);
+					$i++;
 				}
+				$file['name'] = $fileName;
 				move_uploaded_file($file['tmp_name'], $path.$file['name']);	// Déplace le fichier
-				$succesMsg .= $file['name'].' ; ';		// Recup le nom pr le message "sucess"
+				$succesMsg .= $virgule.$file['name'];		// Recup le nom pr le message "sucess"
+				$virgule = ' ; ';
 				$cpt++;
 			}
 			parent::setVariable('succes', $cpt.' fichiers importés avec succès : '.$succesMsg);
