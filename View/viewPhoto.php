@@ -56,7 +56,7 @@ function displayAlbum(idAlbum) {
 	
 	// Requête ajax pour charger les images
 	$.ajax({
-		url : 'photo.php',
+		url : 'Photo.php',
 		type : 'GET',
 		data : 'action=AjaxGetURLPhotos&idAlbum=' + idAlbum,
 		dataType : 'text',
