@@ -45,3 +45,69 @@ float:right;
 #detail_nom {
 word-wrap: break-word;
 }
+
+#listeAlbum {
+max-height: 300px;
+overflow-y: auto;
+}
+#listeAlbum a {
+display: block;
+padding-bottom: 10px;
+word-wrap: break-word;
+color: #373666;
+}
+
+#imgBig {
+display: block;
+margin: 0 auto;
+max-width: 730px;
+max-height: 730px;
+padding: 10px 0 15px 0;
+}
+#listTof {
+max-width: 730px;
+overflow-x: auto;
+white-space: nowrap;
+padding-bottom: 10px;
+}
+.imgMiniature {
+display: inline-block;
+overflow: hidden;
+padding-left: 5px;
+padding-right: 5px;
+}
+.mini {
+position: relative;
+z-index: 1;
+}
+.mini img {
+max-width: 150px;
+max-height: 180px;
+}
+.dl {
+display: none;
+position: relative;
+float: left;
+margin: -37px 0 0 2px;
+z-index: 2;
+}
+.dl img:hover {
+height: 35px;
+margin-top: -6px;
+}
+.suppr {
+display: none;
+position: relative;
+float: left;
+margin: -29px 0 0 29px;
+z-index: 2;
+}
+.suppr img:hover {
+height: 25px;
+margin-top: -3px;
+}
+.loading {
+display: none;
+width: 20px;
+padding-left: 15px;
+}

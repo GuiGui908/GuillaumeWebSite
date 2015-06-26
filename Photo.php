@@ -7,5 +7,21 @@
 	require_once($GLOBALS['CtrlPath'].'PhotoController.php');
 
 	$controlleur = new PhotoController('Photo', 'Mes Photos');
-	$controlleur->defaultAction();
+
+	if(isset($_GET['action']))
+		$action = $_GET['action'];
+	else
+		$action = "defaultAction";
+	
+	if($action === "AjaxGetURLPhotos") {
+		if(isset($_GET['idAlbum'])) {
+			$controlleur->AjaxGetPhotos($_GET['idAlbum']);
+			exit;
+		}
+		else
+			exit;
+	}
+	else
+		$controlleur->defaultAction();
+	
 	$controlleur->render();
