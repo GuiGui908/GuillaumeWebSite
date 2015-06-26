@@ -18,6 +18,7 @@ class PhotoController extends Controller
 			$album['proprio'] = htmlspecialchars($donnees['proprietaire']);
 			$album['desc'] = htmlspecialchars($donnees['description']);
 			$arrAlb[] = $album;
+			var_dump($album);
 		}
 		$reponse->closeCursor();
 

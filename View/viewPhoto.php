@@ -66,6 +66,7 @@ function displayAlbum(idAlbum) {
 			var elementPhoto;
 			var cptNbImg = 0;
 			$("#listTof").text("");
+			alert("Res="+resultat+"\n\nParse="+Photos);
 			
 			for(photo in Photos) {
 				var idTof = Photos[photo]["id"];
