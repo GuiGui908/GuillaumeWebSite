@@ -18,7 +18,6 @@ class PhotoController extends Controller
 			$album['proprio'] = htmlspecialchars($donnees['proprietaire']);
 			$album['desc'] = htmlspecialchars($donnees['description']);
 			$arrAlb[] = $album;
-			var_dump($album);
 		}
 		$reponse->closeCursor();
 
@@ -43,6 +42,7 @@ class PhotoController extends Controller
 			$photos['nom'] = htmlspecialchars($donnees['nom']);
 			$photos['url'] = "Ressources/photos/".htmlspecialchars($donnees['chemin']);
 			$arrPhotos[] = $photos;
+			var_dump($photos);
 		}
 		echo json_encode($arrPhotos);
 	}
