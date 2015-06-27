@@ -34,7 +34,7 @@ class PhotoController extends Controller
 		$requete = $this->DB->prepare("SELECT * FROM photo WHERE idAlbum=:idAlb");
 		$requete -> bindParam(':idAlb', $idAlbum);
 		$requete->execute();
-		
+
 		$arrPhotos = array();
 		$photos = array();
 		while ($donnees = $requete->fetch()) {
@@ -42,7 +42,6 @@ class PhotoController extends Controller
 			$photos['nom'] = htmlspecialchars($donnees['nom']);
 			$photos['url'] = "Ressources/photos/".htmlspecialchars($donnees['chemin']);
 			$arrPhotos[] = $photos;
-			var_dump($photos);
 		}
 		echo json_encode($arrPhotos);
 	}
