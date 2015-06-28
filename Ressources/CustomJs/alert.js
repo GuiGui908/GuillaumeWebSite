@@ -59,6 +59,7 @@ var msg = ({
 		"remember" : true, // boolean remember : indique s'il faut mémoriser le message et ses options, pour un éventuel réaffichage ultérieur
 		"action" : "close", // Par défaut on ferme la fenêtre quand on clique sur OK, sans rien faire de +
 		"link" : "#",
+		"data" : null,
 		"faitesmoipaschieraveclesvirgules" : null
 	},
 	
@@ -361,7 +362,7 @@ var msg = ({
 	},
 	
 	
-	/** accesComments()
+	/** ACTION : accesComments()
 	 * --------------------------------------------------------------------------------------------
 	 *    Quand on valide l'envoi du mot de passe pour accéder à la page Comments de FeedBack
 	 */
@@ -400,7 +401,7 @@ var msg = ({
 	},
 
 
-	/**  uploadfiles()
+	/**  ACTION : uploadfiles()
 	 * --------------------------------------------------------------------------------------------
 	 *    Fonction appellée quand on a une popup qui sert à uploader des fichiers et qu'on a cliqué sur "Uploader"
 	 */
@@ -439,11 +440,11 @@ var msg = ({
 	},
 	
 	
-	/**  creerep()
+	/**  ACTION : creerep()
 	 * --------------------------------------------------------------------------------------------
  	 *    Fonction appellée quand on a une popup qui sert à créer un répertoire et qu'on a cliqué sur "Créer"
  	 */
-	"creerep" : function () {
+	"creerep" : function (data) {
 		var inputField = document.getElementById("dirNewFolder");
 		if(inputField.value == "")
 			document.getElementById("aBtnSubmit").href = "#";
@@ -453,6 +454,29 @@ var msg = ({
 		}
 	},
 	
+	
+	/**  ACTION : SupprPhoto()
+	 * --------------------------------------------------------------------------------------------
+ 	 *    Supprime une photo de la liste de photos (Photo.php)
+ 	 */
+	"SupprPhoto" : function (data) {		
+		$.ajax({
+			url : 'Photo.php',
+			type : 'GET',
+			data : 'action=AjaxSupprPhoto&idPhoto=' + data,
+			dataType : 'text',
+			success : function(resultat, statut) {
+				$("#"+data).hide();
+			},
+			error : function(resultat, statut, erreur) {		// Marche pas je pense....
+				alert("ERROR !!!!\nRes="+resultat+"\nstatut="+statut+"\nerreur="+erreur);
+				$("#errorMsg").text(erreur);
+				$("#errorMsg").show();
+				setTimeout("$('#errorMsg').css('display', 'none');", 4000);
+			}
+		});
+		msg.close();
+	},
 	
 	/** close() 
 	 * --------------------------------------------------------------------------------------------
@@ -486,7 +510,7 @@ var msg = ({
 	 * @return		void
 	 * @access		private
 	 *
-	 */
+	 *
 	"ajaxUpdate" : function (url, options) {
 		// créer l'objet xhr
 		var xhr = null; 
@@ -517,7 +541,7 @@ var msg = ({
 			xhr.abort();
 		}, options.ajaxAbortDelay*1000 );
 		xhr.send(null) ;
-	},
+	},*/
 	
 	
 	
@@ -570,11 +594,15 @@ var msg = ({
 			
 			// bouton Gauche (optionnel)
 			var btnG = '';
-			if (allOptions.button || allOptions.button===0) { btnG = '<div id="closeBtn"><a id="aBtnSubmit" href="'+allOptions.link+'" onclick="msg.'+allOptions.action+'();">'+allOptions.btnOk+'</a>'; }
+			if (allOptions.button || allOptions.button===0) {
+				btnG = '<div id="closeBtn"><a id="aBtnSubmit" href="'+allOptions.link+'" onclick="msg.'+allOptions.action+'('+allOptions.data+');">'+allOptions.btnOk+'</a>';
+			}
 		
 			// bouton Droite (optionnel)
 			var btnD = '';
-			if (allOptions.button || allOptions.button===0) { btnD = '<a href="#" onclick="msg.close();return false;">'+allOptions.btnNop+'</a></div>'; }
+			if (allOptions.button || allOptions.button===0) {
+				btnD = '<a href="#" onclick="msg.close();return false;">'+allOptions.btnNop+'</a></div>';
+			}
 		
 		// intégrer tout ça dans la boîte
 		msgBoxObj.innerHTML = titleObj + "\n" + msgContentObj + "\n" + btnG + btnD;
@@ -685,6 +713,7 @@ msg.init();
 
 // quelques préréglages (pas indispensables)
 
+/*
 msg.preset( // message de type alert(), en plus joli
 	"alert", // nom du réglage
 	"!", // message par défaut
@@ -705,7 +734,7 @@ msg.preset( // indiquer un chargement en cours (pense à fermer le message quand
 		"title" : "chargement en cours",
 		"context" : '<span style="padding-left:20px;background:transparent url(Ressources/images/loader.gif) no-repeat left center;">$msg$</span>'
 	}
-);
+);*/
 
 msg.preset( // message sous forme d'infobulle
 	"tip", // nom du réglage

@@ -45,6 +45,28 @@ class PhotoController extends Controller
 		}
 		echo json_encode($arrPhotos);
 	}
+	
+	function AjaxSupprPhoto($idPhoto) {
+		// Cherche le chemin de la photo à supprimer
+		$requete = $this->DB->prepare("SELECT chemin FROM photo WHERE id=:idTof");
+		$requete -> bindParam(':idTof', $idPhoto);
+		$requete->execute();
+		$chemin = 'Ressources/photos/' . $requete->fetchColumn();
+		if(file_exists($chemin)) {		// Supprime le fichier
+			@unlink($chemin);
+		}
+
+		// Supprime la photo de la base de données
+		$requete = $this->DB->prepare("DELETE FROM photo WHERE id=:idTof");
+		$requete -> bindParam(':idTof', $idPhoto);
+		$requete->execute();
+				
+		if(!$requete) {		// Pas sûr que ça marche tout ça --"
+			header('HTTP/1.1 500 Internal Server Error');
+			header('Content-Type: application/json; charset=UTF-8');
+			die(json_encode(array('resultat' => 'ERROR', 'erreur' => 1337)));
+		}
+	}
 }
 
 

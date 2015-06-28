@@ -11,6 +11,7 @@
 		</div>
 		-->
 	</div>
+	<span id="errorMsg" class="err"></span>
 </div>
 
 <div class="right"> 
@@ -24,7 +25,7 @@
 	<a href="javascript: supprAlbum();" id="dl_Alb" class="btn">Supprimer l'album</a><br /><br />
 	<a href="javascript: return false;" id="dl_Alb" class="btn">Télécharger l'album</a><br /><br />
 
-	<h3>Tous les albums <a href="#" title="Grouper par Propriétaire"><img src="Ressources/images/arbo.jpg" alt="GroupByOwner"/></a></h3>
+	<h3>Tous les albums <a href="#" onmouseover="msg.reload('tip', 'Grouper par propriétaire', null);" onmouseout="msg.close();"><img src="Ressources/images/arbo.jpg" alt="GroupByOwner"/></a></h3>
 	<a href="javascript: creerAlbum();" id="creer_Album" class="btn">Créer un album...</a><br /><br />
 	<div id="listeAlbum">
 		<!-- Contenu généré ici -->
@@ -105,7 +106,15 @@ function affichePhoto(url) {
 }
 
 function supprPhoto(idPhoto) {
-	alert("TODO");
+	var options = {
+		"title": "Etes-vous vraiment sûr de supprimer la photo ?",
+		"btnOk" : "Supprimer",
+		"btnNop" : "Annuler",
+		"modal": "True",
+		"action" : "SupprPhoto",
+		"data" : idPhoto
+	};
+	msg.open( "Voulez-vous vraiment supprimer la photo ?" , options);
 }
 
 function creerAlbum() {

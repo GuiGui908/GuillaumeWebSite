@@ -18,8 +18,14 @@
 			$controlleur->AjaxGetPhotos($_GET['idAlbum']);
 			exit;
 		}
-		else
+		else exit;
+	}
+	else if($action === "AjaxSupprPhoto") {
+		if(isset($_GET['idPhoto'])) {
+			$controlleur->AjaxSupprPhoto($_GET['idPhoto']);
 			exit;
+		}
+		else exit;
 	}
 	else
 		$controlleur->defaultAction();
