@@ -15,18 +15,25 @@
 </div>
 
 <div class="right"> 
-	<h3>Album "<span id="nomAlb">---</span>"<br />(<span id="nbTof">0</span> photos)</h3>
+	<h3>
+		Album "<span id="nomAlb">---</span>"<br />(<span id="nbTof">0</span> photos)
+		<img class="loading" id="loadingSupprAlb" src="Ressources/images/waitWhite.gif" alt="Patientez....." />
+		<img class="loading" id="succesSupprAlb" src="Ressources/images/succesWhite.jpg" alt="Succès :)" />
+		<img class="loading" id="errSupprAlb" src="Ressources/images/errWhite.jpg" alt="Echec :(" />
+	</h3>
+	<span class="hidden" id="idAlbum"></span>  <!-- champ caché inutile qui sert juste à avoir l'id
+													de l'album courrant (car on le change avec du JS/Ajax seulement)  -->
 	<br />
 	<b>Propriétaire : </b><br />
 	<span id="proprio">--</span><br />
 	<b>Description : </b><br />
 	<span id="description">--</span><br /><br />
-	<a href="javascript: ajouterPhoto();" id="add_Tof" class="btn">Ajouter des photos</a><br /><br />
-	<a href="javascript: supprAlbum();" id="dl_Alb" class="btn">Supprimer l'album</a><br /><br />
-	<a href="javascript: return false;" id="dl_Alb" class="btn">Télécharger l'album</a><br /><br />
+	<a href="javascript: ajouterPhoto();" class="btn">Ajouter des photos</a><br /><br />
+	<a href="javascript: supprAlbum();" class="btn">Supprimer l'album</a><br /><br />
+	<a href="javascript: return false;" class="btn">Télécharger l'album</a><br /><br />
 
 	<h3>Tous les albums <a href="#" onmouseover="msg.reload('tip', 'Grouper par propriétaire', null);" onmouseout="msg.close();"><img src="Ressources/images/arbo.jpg" alt="GroupByOwner"/></a></h3>
-	<a href="javascript: creerAlbum();" id="creer_Album" class="btn">Créer un album...</a><br /><br />
+	<a href="javascript: creerAlbum();" class="btn">Créer un album...</a><br /><br />
 	<div id="listeAlbum">
 		<!-- Contenu généré ici -->
 	</div>
@@ -44,10 +51,12 @@ $(document).ready(function() {
 });
 
 function displayAlbum(idAlbum) {
+	$("#imgBig").attr("src", "Ressources/images/rien.jpg");
 	$("#loading"+idAlbum).css("display", "inline");
 	for(album in arrayAlbums) {
 		if(arrayAlbums[album]["id"] === idAlbum) {
 			$("#msgTop").text(arrayAlbums[album]["nom"]);
+			$("#idAlbum").text(arrayAlbums[album]["id"]);
 			$("#nomAlb").text(arrayAlbums[album]["nom"]);
 			$("#proprio").text(arrayAlbums[album]["proprio"]);
 			$("#description").text(arrayAlbums[album]["desc"]);
@@ -74,7 +83,7 @@ function displayAlbum(idAlbum) {
 				var elementPhoto = "<div class=\"imgMiniature\" id=\"" + idTof + "\" onmouseover=\"miniatureOver("+ idTof +");\" onmouseout=\"miniatureOut("+ idTof +");\">";
 				elementPhoto += "<a href=\"javascript: affichePhoto(\'"+ urlTof +"\');\" class=\"mini\"> <img src=\""+ urlTof +"\" alt=\""+Photos[photo]["nom"] +"\"/> </a>";
 				elementPhoto += "<a href=\""+ urlTof +"\" download=\""+ Photos[photo]["nom"] +"\" class=\"dl\"><img src=\"Ressources/images/DL.png\" alt=\"DL\"></a>";
-				elementPhoto += "<a href=\"javascript: supprPhoto("+ idTof +");\" class=\"suppr\"><img src=\"Ressources/images/Suppr.png\" alt=\"Suppr\"></a></div>";
+				elementPhoto += "<a href=\"javascript: supprPhoto("+ idTof +");\" class=\"suppr\"><img src=\"Ressources/images/suppr.png\" alt=\"Suppr\"></a></div>";
 				
 				$("#listTof").append(elementPhoto);
 				cptNbImg++;
@@ -118,7 +127,24 @@ function supprPhoto(idPhoto) {
 }
 
 function creerAlbum() {
-	alert("TODO");
+	var options = {
+		"title": "Créer un nouvel album",
+		"btnOk" : "Créer",
+		"btnNop" : "Annuler",
+		"modal": "True",
+		"action" : "creerAlbum",
+	};	
+	msg.open( "<form id=\"FormNewAlb\" action=\"Photo.php?action=creerAlbm\" method=\"post\" enctype=\"multipart/form-data\">"+
+				"<span class=\"formAlertLbL\"><span class=\"RED\">* </span>Nom :</span>"+
+					"<input type=\"text\" name=\"nameAlb\" id=\"nameAlb\" placeholder=\"Nom de l'album\" />  <br />"+
+				"<span class=\"formAlertLbL\">&nbsp;&nbsp;Propriétaire :</span>"+
+					"<input type=\"text\" name=\"proprioAlb\" id=\"proprioAlb\" placeholder=\"Nom du propriétaire de l'album\" />  <br />"+
+				"<span class=\"formAlertLbL\"><span class=\"RED\">* </span>Photos :</span>"+
+					"<input type=\"file\" name=\"listPhotos[]\" id=\"listPhotos\" multiple />  <br />"+
+				"<span class=\"formAlertLbL\"><span class=\"RED\">* </span>Description :</span>"+
+					"<textarea name=\"descAlb\" id=\"descAlb\" cols=\"30\" placeholder=\"Un petit mot...\"></textarea>  <br />"+
+				"<span id=\"popupErrMsg\"></span>"+
+			  "</form><br />" , options);
 }
 
 function ajouterPhoto() {
@@ -126,7 +152,18 @@ function ajouterPhoto() {
 }
 
 function supprAlbum() {
-	alert("TODO");
+	var idAlbum = $("#idAlbum").text();
+	if(idAlbum === "") return;
+
+	var options = {
+		"title": "Etes-vous vraiment sûr de supprimer tout l'album ?",
+		"btnOk" : "Supprimer",
+		"btnNop" : "Annuler",
+		"modal": "True",
+		"action" : "supprAlbm",
+		"data" : idAlbum
+	};
+	msg.open( "Supprimer tout l'album entier ? ATTENTION !! c'est irréversible" , options);
 }
 
 

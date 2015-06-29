@@ -27,6 +27,17 @@
 		}
 		else exit;
 	}
+	else if($action === "AjaxSupprAlbm") {
+		if(isset($_GET['idAlbum'])) {
+			$controlleur->AjaxSupprAlbum($_GET['idAlbum']);
+			exit;
+		}
+		else exit;
+	}
+	else if($action === "AjaxCreerAlb") {
+		$controlleur->AjaxCreerAlbum();
+		exit;
+	}
 	else
 		$controlleur->defaultAction();
 	

@@ -435,6 +435,9 @@ var msg = ({
 		
 		$('#info').html('Upload des fichiers en cours ....<br />Veuillez patienter');
 		$('.info').show();
+		window.onbeforeunload = function() {
+			return "L'envoi des fichiers vers le serveur n'est pas terminé !\nEtes-vous sûr de vouloir quitter la page et annuler le téléchargement ?";
+		}
 		document.getElementById("FormUp").submit();
 		msg.close();
 	},
@@ -475,6 +478,94 @@ var msg = ({
 				setTimeout("$('#errorMsg').css('display', 'none');", 4000);
 			}
 		});
+		msg.close();
+	},
+	
+	
+	/**  ACTION : supprAlbm()
+	 * --------------------------------------------------------------------------------------------
+ 	 *    Supprime l'album de la BD, les photos du serveur et de la BD (Photo.php)
+ 	 */
+	"supprAlbm" : function(data) {
+		// Requête ajax pour supprimer les photos du serveur et les liens de la BD
+		$("#loadingSupprAlb").show();
+		$.ajax({
+			url : 'Photo.php',
+			type : 'GET',
+			data : 'action=AjaxSupprAlbm&idAlbum=' + data,
+			dataType : 'text',
+			success : function(resultat, statut) {
+				$("#loadingSupprAlb").hide();
+				$("#succesSupprAlb").show();
+				setTimeout("location.reload(true);", 2000);
+			},
+			error : function(resultat, statut, erreur){
+				$("#loadingSupprAlb").hide();
+				$("#errSupprAlb").show();
+				setTimeout("location.reload(true);", 2000);
+			}
+		});
+		msg.close();
+	},
+	
+	
+	/**  ACTION : creerAlbum()
+	 * --------------------------------------------------------------------------------------------
+ 	 *    Crée un nouvel album en BD, et upload les photos sur le serveur (Photo.php)
+ 	 */
+	"creerAlbum" : function (data) {
+		var nom     = $("#nameAlb").val();		// input dont l'attribut name est 'nomAlb'
+		var proprio = $("#proprioAlb").val();
+		var files   = document.getElementById("listPhotos").files;
+		var desc    = $("#descAlb").val();
+
+		// Si les champs sont pas remplis, on met une erreur
+		if(nom == "") { $("#popupErrMsg").text("Vous devez donner un nom à l'album !");                		   return false; }
+		else if(files.length == 0) { $("#popupErrMsg").text("Vous devez sélectionner les photos à uploader");  return false; }
+		else if(desc == "") { $("#popupErrMsg").text("Vous devez faire une description de l'album");	  	   return false; }
+
+		if(proprio == "") proprio = "Anonyme";		// Si on a pas mis son nom alors on est anonyme
+		
+		// vérifie qu'on a que des fichiers image !
+		for ( var i = 0; i < files.length; i ++ )
+        {
+			var extension = files[i].name;
+			// TODO RECUPERE L'EXTENSION
+			//if(extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "bmp" && extension != "gif") {
+			//	$("#popupErrMsg").text("Un des fichiers sélectionné n'est pas un fichier image !\nExtensions acceptées : jpg jpeg png bmp gif");
+			//	return false;
+			//}
+		}
+		
+		var chemin, idAlbum;
+		// Appel ajax pour créer le dossier et la base.
+		$.ajax({
+			url : 'Photo.php',
+			type : 'GET',
+			data : 'action=AjaxCreerAlb&nameAlb='+nom+'&proprioAlb='+proprio+'&descAlb='+desc,
+			dataType : 'text',
+			success : function(resultat, statut) {
+				resultat = JSON.parse(resultat);
+				if(resultat[0] === "<erreur>")
+					alert("AjaxCreerAlb - ERRERU= \n"+resultat);
+				else
+				{
+					chemin  = resultat[1];
+					idAlbum = resultat[2]; 
+					alert("Les images sont pas encore uploadées.... L'album est vide");
+					// TODO !!!!
+					// for( chaque image)
+						// upload(image[i], chemin, idAlbum)
+				}
+			},
+			error: function(resultat, statut, erreur) {
+				alert("AjaxCreerAlb - resultats= \n"+resultat);
+			}
+		});
+		
+		// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
+		// 1 photo à la fois ?? A voir
+		
 		msg.close();
 	},
 	
@@ -610,13 +701,39 @@ var msg = ({
         // appliquer les options de style à la boîte
         this.transfer(allOptions.style, msgBoxObj.style);
         if (this.ie && this.ie<7 && msgBoxObj.offsetWidth>allOptions.ieMaxWidth) {  msgBoxObj.style.width = allOptions.ieMaxWidth + 'px'; } // cheat max-width pour IE<7
+		
+		// Mettre le focus sur les objets et les listeners sur Entrée/Echap
 		if(allOptions.action === "creerep") {
 			document.getElementById("dirNewFolder").focus();
-			document.getElementById("dirNewFolder").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
+			document.getElementById("dirNewFolder").addEventListener("keypress", function(e) {
+				if(e.keyCode==13) document.getElementById("aBtnSubmit").click();
+				if(e.keyCode==27) msg.close();
+			}); 
 		}
 		if(allOptions.action === "accesComments") {
 			document.getElementById("pwd").focus();
-			document.getElementById("pwd").addEventListener("keypress", function(e) { if(e.keyCode==13) document.getElementById("aBtnSubmit").click(); if(e.keyCode==27) msg.close(); }); 
+			document.getElementById("pwd").addEventListener("keypress", function(e) {
+				if(e.keyCode==13) document.getElementById("aBtnSubmit").click();
+				if(e.keyCode==27) msg.close();
+			}); 
+		}
+		if(allOptions.action === "creerAlbum") {
+			document.getElementById("nameAlb").focus();
+			document.getElementById("nameAlb").addEventListener("keypress", function(e) {
+				if(e.keyCode==13) document.getElementById("aBtnSubmit").click();
+				if(e.keyCode==27) msg.close();
+			});
+			document.getElementById("proprioAlb").addEventListener("keypress", function(e) {
+				if(e.keyCode==13) document.getElementById("aBtnSubmit").click();
+				if(e.keyCode==27) msg.close();
+			});
+			document.getElementById("listPhotos").addEventListener("keypress", function(e) {
+				if(e.keyCode==13) document.getElementById("aBtnSubmit").click();
+				if(e.keyCode==27) msg.close();
+			});
+			document.getElementById("descAlb").addEventListener("keypress", function(e) {
+				if(e.keyCode==27) msg.close();
+			}); 
 		}
 
 		// positionner la boîte de message à l'endroit voulu de la fenêtre
