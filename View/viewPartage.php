@@ -66,8 +66,8 @@
 	<b>Taille :</b> <span  id="detail_taille">--</span> Mo<br /><br />
 	<b>Date d'import :</b><br />
 	<span  id="detail_date">-- -- --</span><br /><br />
-	<a href="#" id="detail_dl" download="default" class="btn">Télécharger</a><br /><br />
-	<a href="#" id="detail_suppr" class="btn">Supprimer...</a><br /><br />
+	<a href="javaScript: return false;" id="detail_dl" download="default" class="btn">Télécharger</a><br /><br />
+	<a href="javaScript: return false;" id="detail_suppr" class="btn">Supprimer...</a><br /><br />
 	<span id="suppr_link" class="hidden">#</span>
 </div>
 

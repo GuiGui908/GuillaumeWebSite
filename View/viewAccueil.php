@@ -30,6 +30,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
 <li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
 <li>Photo : Faire toute la page</li>
+<li>Auth et mdp à la création album ? Et pr suppr img/album ? => sécu</li>
 <li></li>
 </ul>
 <br />

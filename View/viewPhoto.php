@@ -1,4 +1,4 @@
-<div class="left"> 
+<div class="left noselect"> 
 	<h1 id="msgTop">Sélectionnez un album dans la liste à droite</h1>
 	<img id="imgBig"src="Ressources/images/rien.jpg"/>
 	<hr /><br />
@@ -15,8 +15,8 @@
 </div>
 
 <div class="right"> 
-	<h3>
-		Album "<span id="nomAlb">---</span>"<br />(<span id="nbTof">0</span> photos)
+	<h3 class="inline">
+		Album "<span id="nomAlb" onclick="setNomAlbum()">---</span>"<br />(<span id="nbTof">0</span> photos)
 		<img class="loading" id="loadingSupprAlb" src="Ressources/images/waitWhite.gif" alt="Patientez....." />
 		<img class="loading" id="succesSupprAlb" src="Ressources/images/succesWhite.jpg" alt="Succès :)" />
 		<img class="loading" id="errSupprAlb" src="Ressources/images/errWhite.jpg" alt="Echec :(" />
@@ -25,9 +25,9 @@
 													de l'album courrant (car on le change avec du JS/Ajax seulement)  -->
 	<br />
 	<b>Propriétaire : </b><br />
-	<span id="proprio">--</span><br />
+	<span id="proprio" onclick="setProprio()">--</span><br />
 	<b>Description : </b><br />
-	<span id="description">--</span><br /><br />
+	<span id="description" onclick="setDesc()">--</span><br /><br />
 	<a href="javascript: ajouterPhoto();" class="btn">Ajouter des photos</a><br /><br />
 	<a href="javascript: supprAlbum();" class="btn">Supprimer l'album</a><br /><br />
 	<a href="javascript: return false;" class="btn">Télécharger l'album</a><br /><br />
@@ -44,11 +44,132 @@
 var arrayAlbums;
 $(document).ready(function() {
 	 arrayAlbums = JSON.parse(' <?php echo $this->getVariable('arrAlb'); ?> ');
-	 for(album in arrayAlbums) {
+	 setAlbumListe(arrayAlbums);
+});
+
+function setAlbumListe(arrayAlbums) {
+	$("#listeAlbum").html("");		// Vide la liste
+	for(album in arrayAlbums) {
 		 $("#listeAlbum").append("<a href=\"javascript: displayAlbum('"+ arrayAlbums[album]["id"] +"');\">"+ arrayAlbums[album]["nom"] +
 									"<img class=\"loading\" id=\"loading"+ arrayAlbums[album]["id"] +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
 	}
-});
+}
+
+var isEdditingNomAlbum = false;
+var isEdditingProprio = false;
+var isEdditingDescription = false;
+
+// Fonctions appellées pour les listenners de modif des noms
+function setNomAlbum() {		// Entre dans le mode d'édition du nom de l'album
+	var ancienNom = $("#nomAlb").text().toString();
+	if(!isEdditingNomAlbum && ancienNom != "---") {
+		isEdditingNomAlbum = true;
+		var nbChar = ancienNom.length;
+		$("#nomAlb").html("<input type=\"text\" class=\"inline\" id=\"setNomAlbum\" value=\"" + ancienNom + "\" size=\""+ nbChar +"\" />");
+		document.getElementById("setNomAlbum").focus();
+		document.getElementById("setNomAlbum").addEventListener("keypress", function(e) {
+			if(e.keyCode==27) {
+				// Quitte le mode d'édition
+				$("#nomAlb").text(ancienNom);
+				isEdditingNomAlbum = false;
+			}
+			if(e.keyCode==13) {
+				var nouveauNom = document.getElementById("setNomAlbum").value;
+				// Appel AJAX pour modifier le nom de l'album
+				$.ajax({
+					url : 'Photo.php',
+					type : 'GET',
+					data : 'action=AjaxChangeNomAlb&idAlb=' + $("#idAlbum").text() + '&nom=' + nouveauNom,
+					dataType : 'text',
+					success : function(resultat, statut) {
+						$("#nomAlb").text(nouveauNom);
+						$("#msgTop").text(nouveauNom);
+						arrayAlbums = JSON.parse(resultat);
+						setAlbumListe(arrayAlbums);
+						isEdditingNomAlbum = false;
+					},
+					error : function(resultat, statut, erreur) {
+						$("#nomAlb").text(ancienNom);
+						isEdditingNomAlbum = false;
+					}
+				});
+			}
+		});
+	}
+}
+
+function setProprio() {		// Entre dans le mode d'édition du nom du propriétaire
+	var ancienNom = $("#proprio").text().toString();
+	if(!isEdditingProprio && ancienNom != "--") {
+		isEdditingProprio = true;
+		$("#proprio").html("<input type=\"text\" class=\"inline\" id=\"setProprio\" value=\"" + ancienNom + "\" size=\"26\" />");
+		document.getElementById("setProprio").focus();
+		document.getElementById("setProprio").addEventListener("keypress", function(e) {
+			if(e.keyCode==27) {
+				// Quitte le mode d'édition
+				$("#proprio").text(ancienNom);
+				isEdditingProprio = false;
+			}
+			if(e.keyCode==13) {
+				var nouveauNom = document.getElementById("setProprio").value;
+				// Appel AJAX pour modifier le nom du propriétaire
+				$.ajax({
+					url : 'Photo.php',
+					type : 'GET',
+					data : 'action=AjaxChangeProprio&idAlb=' + $("#idAlbum").text() + '&nom=' + nouveauNom,
+					dataType : 'text',
+					success : function(resultat, statut) {
+						$("#proprio").text(nouveauNom);
+						arrayAlbums = JSON.parse(resultat);
+						setAlbumListe(arrayAlbums);
+						isEdditingProprio = false;
+					},
+					error : function(resultat, statut, erreur) {
+						$("#proprio").text(ancienNom);
+						isEdditingProprio = false;
+					}
+				});
+			}
+		});
+	}
+}
+
+function setDesc() {		// Entre dans le mode d'édition de la dscription de l'album
+	var ancienneDesc = $("#description").text().toString();
+	if(!isEdditingDescription && ancienneDesc != "--") {
+		isEdditingDescription = true;
+		$("#description").html("<input class=\"inline\" id=\"setDesc\" value=\""+ ancienneDesc +"\" size=\"26\" />");
+		document.getElementById("setDesc").focus();
+		document.getElementById("setDesc").addEventListener("keypress", function(e) {
+			if(e.keyCode==27) {
+				// Quitte le mode d'édition
+				$("#description").text(ancienneDesc);
+				isEdditingDescription = false;
+			}
+			if(e.keyCode==13) {
+				var nouvelleDesc = document.getElementById("setDesc").value;
+				// Appel AJAX pour modifier la description
+				$.ajax({
+					url : 'Photo.php',
+					type : 'GET',
+					data : 'action=AjaxChangeDescription&idAlb=' + $("#idAlbum").text() + '&desc=' + nouvelleDesc,
+					dataType : 'text',
+					success : function(resultat, statut) {
+						$("#description").text(nouvelleDesc);
+						arrayAlbums = JSON.parse(resultat);
+						setAlbumListe(arrayAlbums);
+						isEdditingDescription = false;
+					},
+					error : function(resultat, statut, erreur) {
+						$("#description").text(ancienneDesc);
+						isEdditingDescription = false;
+					}
+				});
+			}
+		});
+	}
+}
+
 
 function displayAlbum(idAlbum) {
 	$("#imgBig").attr("src", "Ressources/images/rien.jpg");

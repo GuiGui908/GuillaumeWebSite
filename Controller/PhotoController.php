@@ -8,8 +8,17 @@ class PhotoController extends Controller
 		$nbTofAlb = 0;
 		$descAlb = '-- --';
 		$msgTop = 'Sélectionnez un album dans la liste à droite';
-		
-		$arrAlb = array();
+		$arrAlb = $this->getTableauAlbums();
+	
+		parent::setVariable('msgTop', $msgTop);
+		parent::setVariable('nomAlb', $nomAlb);
+		parent::setVariable('proprioAlb', $proprioAlb);
+		parent::setVariable('nbTofAlb', $nbTofAlb);
+		parent::setVariable('descAlb', $descAlb);
+		parent::setVariable('arrAlb', json_encode($arrAlb));
+	}
+	
+	function getTableauAlbums() {
 		$album = array();
 		$reponse = $this->DB->query('SELECT * FROM album');
 		while ($donnees = $reponse->fetch()) {
@@ -20,14 +29,7 @@ class PhotoController extends Controller
 			$arrAlb[] = $album;
 		}
 		$reponse->closeCursor();
-
-		
-		parent::setVariable('msgTop', $msgTop);
-		parent::setVariable('nomAlb', $nomAlb);
-		parent::setVariable('proprioAlb', $proprioAlb);
-		parent::setVariable('nbTofAlb', $nbTofAlb);
-		parent::setVariable('descAlb', $descAlb);
-		parent::setVariable('arrAlb', json_encode($arrAlb));
+		return $arrAlb;
 	}
 	
 	function AjaxGetPhotos($idAlbum) {
@@ -97,7 +99,7 @@ class PhotoController extends Controller
 	}
 	
 	
-	function AjaxCreerAlbum() {
+	function AjaxCreerAlbum($albName, $proprio, $description) {
 		// Crée un répertoire qui existe pas déjà dans /Ressources/photos
 		do {
 			$folder = rand(0, 9999);
@@ -109,19 +111,67 @@ class PhotoController extends Controller
 		}
 		
 		// Crée un album dans la BD (1 ligne)
-		$requete = $this->DB->prepare("INSERT INTO album(nom, proprietaire, description, chemin) VALUES(:nom, :proprio, :desc, :chemin)");
-		$requete -> bindParam(':nom', $_GET['nameAlb']);
-		$requete -> bindParam(':proprio', $_GET['proprioAlb']);
-		$requete -> bindParam(':desc', $_GET['descAlb']);
+		$requete = $this->DB->prepare("INSERT INTO album(nom, proprietaire, description, chemin, ip) VALUES(:nom, :proprio, :desc, :chemin, :ip)");
+		$requete -> bindParam(':nom', $albName);
+		$requete -> bindParam(':proprio', $proprio);
+		$requete -> bindParam(':desc', $description);
 		$requete -> bindParam(':chemin', $path);
+		$requete -> bindParam(':ip', $_SERVER['REMOTE_ADDR']);
 		$requete->execute();
 		if(!$requete) {
 			echo json_encode(array("<erreur>", "Erreur INSERT INTO album :/"));
 			return;
 		}
 		$idAlbum = $this->DB->lastInsertId();
+		$arrAlb = $this->getTableauAlbums();
 
-		echo json_encode(array("Succès !!!", $path, $idAlbum, $_GET['nameAlb'], $_GET['proprioAlb'], $_GET['descAlb']));
+		echo json_encode( array("Succès !!!", $path, $idAlbum, $_GET['nameAlb'], $_GET['proprioAlb'], $_GET['descAlb'], json_encode($arrAlb)) );
+	}
+	
+	
+	function AjaxChangeNomAlb($nouveauNom, $idAlb) {
+		$requete = $this->DB->prepare("UPDATE album SET nom=:nom WHERE id=:idAlbum");
+		$requete -> bindParam(':nom', $nouveauNom);
+		$requete -> bindParam(':idAlbum', $idAlb);
+		$requete->execute();
+		if(!$requete) {		// Si probleme
+			echo "Erreur UPDATE nom album :/";
+			return;
+		}
+		
+		// Affiche le json de la liste des albums pour que la modif s'affiche dans la liste
+		$arrAlb = $this->getTableauAlbums();
+		echo json_encode($arrAlb);
+	}
+	
+	function AjaxChangeProprio($nouveauNom, $idAlb) {
+		$requete = $this->DB->prepare("UPDATE album SET proprietaire=:nom WHERE id=:idAlbum");
+		$requete -> bindParam(':nom', $nouveauNom);
+		$requete -> bindParam(':idAlbum', $idAlb);
+		$requete->execute();
+		if(!$requete) {		// Si probleme
+			echo "Erreur UPDATE propriétaire album :/";
+			return;
+		}
+		
+		// Affiche le json de la liste des albums pour que la modif s'affiche dans la liste
+		$arrAlb = $this->getTableauAlbums();
+		echo json_encode($arrAlb);
+	}
+	
+	function AjaxChangeDescription($nouvelleDesc, $idAlb) {
+		$requete = $this->DB->prepare("UPDATE album SET description=:desc WHERE id=:idAlbum");
+		$requete -> bindParam(':desc', $nouvelleDesc);
+		$requete -> bindParam(':idAlbum', $idAlb);
+		$requete->execute();
+		if(!$requete) {		// Si probleme
+			echo "Erreur UPDATE description album :/";
+			return;
+		}
+		
+		// Affiche le json de la liste des albums pour que la modif s'affiche dans la liste
+		$arrAlb = $this->getTableauAlbums();
+		echo json_encode($arrAlb);
 	}
 }
 

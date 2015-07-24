@@ -35,7 +35,19 @@
 		else exit;
 	}
 	else if($action === "AjaxCreerAlb") {
-		$controlleur->AjaxCreerAlbum();
+		$controlleur->AjaxCreerAlbum($_GET['nameAlb'], $_GET['proprioAlb'], $_GET['descAlb']);
+		exit;
+	}
+	else if($action === "AjaxChangeNomAlb") {
+		$controlleur->AjaxChangeNomAlb($_GET['nom'], $_GET['idAlb']);
+		exit;
+	}
+	else if($action === "AjaxChangeProprio") {
+		$controlleur->AjaxChangeProprio($_GET['nom'], $_GET['idAlb']);
+		exit;
+	}
+	else if($action === "AjaxChangeDescription") {
+		$controlleur->AjaxChangeDescription($_GET['desc'], $_GET['idAlb']);
 		exit;
 	}
 	else

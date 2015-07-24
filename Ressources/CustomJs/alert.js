@@ -547,29 +547,42 @@ var msg = ({
 			success : function(resultat, statut) {
 				resultat = JSON.parse(resultat);
 				if(resultat[0] === "<erreur>")
-					alert("AjaxCreerAlb - ERRERU= \n"+resultat);
+					alert("AjaxCreerAlb - ERREUR= \n"+resultat);
 				else
 				{
 					chemin  = resultat[1];
-					idAlbum = resultat[2]; 
+					idAlbum = resultat[2];
+					var arrayAlbums = JSON.parse(resultat[6]);
+					$("#listeAlbum").html("");		// Vide la liste
+					for(album in arrayAlbums) {
+						 $("#listeAlbum").append("<a href=\"javascript: displayAlbum('"+ arrayAlbums[album]["id"] +"');\">"+ arrayAlbums[album]["nom"] +
+													"<img class=\"loading\" id=\"loading"+ arrayAlbums[album]["id"] +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
+					}
 					alert("Les images sont pas encore uploadées.... L'album est vide");
-					// TODO !!!!
-					// for( chaque image)
-						// upload(image[i], chemin, idAlbum)
+
+					// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
+					// 1 photo à la fois ?? A voir
+					msg.uploadImages(files, chemin, idAlbum);
 				}
 			},
 			error: function(resultat, statut, erreur) {
 				alert("AjaxCreerAlb - resultats= \n"+resultat);
 			}
 		});
-		
-		// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
-		// 1 photo à la fois ?? A voir
-		
 		msg.close();
 	},
 	
-	/** close() 
+	/**  AUXILIAIRE : uploadImages()
+	 * --------------------------------------------------------------------------------------------
+ 	 *    Upload dans la base de données les images une par une avec une requête ajax pour chaque
+ 	 */
+	"uploadImages" : function (files, chemin, idAblbum) {
+		// TODO
+		alert("uploadImages  TODO");
+	},
+
+
+	 /** close() 
 	 * --------------------------------------------------------------------------------------------
 	 * ferme le message
 	 *
