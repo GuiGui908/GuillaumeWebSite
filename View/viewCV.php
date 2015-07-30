@@ -27,9 +27,17 @@ J'ai pu apprendre les concepts avancés de la programmation Java et C/C++ à tra
 
 <h2>Downloads :</h2>
 <ul>
-<li><a href="<?php echo $this->getVariable('CVPath'); ?>">Curriculum Vitae</a></li>
+<li><a href="<?php echo $this->getVariable('CVcourt'); ?>">Curriculum Vitae</a></li>
+<li><a href="<?php echo $this->getVariable('CVlong'); ?>">Curriculum Vitae (version détaillée)</a></li>
 <li><a href="<?php echo $this->getVariable('Rapport3APath'); ?>">Rapport de stage Ouvrier</a></li>
 <li><a href="<?php echo $this->getVariable('Rapport4APath'); ?>">Rapport de stage - Développeur Web</a></li>
+</ul>
+<br />
+
+<h2>Liens :</h2>
+<ul>
+<li><a href="https://ca.linkedin.com/pub/guillaume-bert/b5/39a/4a2" target="_blank">Mon profil LinkedIn</a></li>
+<li><a href="http://beknown.com/guillaume-bert" target="_blank">Mon profil Monster</a></li>
 </ul>
 
 </div>

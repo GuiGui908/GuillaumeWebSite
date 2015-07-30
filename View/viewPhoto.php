@@ -30,7 +30,7 @@
 	<span id="description" onclick="setDesc()">--</span><br /><br />
 	<a href="javascript: ajouterPhoto();" class="btn">Ajouter des photos</a><br /><br />
 	<a href="javascript: supprAlbum();" class="btn">Supprimer l'album</a><br /><br />
-	<a href="javascript: return false;" class="btn">Télécharger l'album</a><br /><br />
+	<a href="javascript: downloadAlbum();" class="btn">Télécharger l'album</a><br /><br />
 
 	<h3>Tous les albums <a href="#" onmouseover="msg.reload('tip', 'Grouper par propriétaire', null);" onmouseout="msg.close();"><img src="Ressources/images/arbo.jpg" alt="GroupByOwner"/></a></h3>
 	<a href="javascript: creerAlbum();" class="btn">Créer un album...</a><br /><br />
@@ -175,7 +175,7 @@ function displayAlbum(idAlbum) {
 	$("#imgBig").attr("src", "Ressources/images/rien.jpg");
 	$("#loading"+idAlbum).css("display", "inline");
 	for(album in arrayAlbums) {
-		if(arrayAlbums[album]["id"] === idAlbum) {
+		if(arrayAlbums[album]["id"] == idAlbum) {
 			$("#msgTop").text(arrayAlbums[album]["nom"]);
 			$("#idAlbum").text(arrayAlbums[album]["id"]);
 			$("#nomAlb").text(arrayAlbums[album]["nom"]);
@@ -207,6 +207,7 @@ function displayAlbum(idAlbum) {
 				elementPhoto += "<a href=\"javascript: supprPhoto("+ idTof +");\" class=\"suppr\"><img src=\"Ressources/images/suppr.png\" alt=\"Suppr\"></a></div>";
 				
 				$("#listTof").append(elementPhoto);
+				if(cptNbImg == 0) affichePhoto(urlTof);
 				cptNbImg++;
 			}
 			$("#nbTof").text(cptNbImg);
@@ -268,9 +269,33 @@ function creerAlbum() {
 			  "</form><br />" , options);
 }
 
+
 function ajouterPhoto() {
-	alert("TODO");
+	var idAlbum = $("#idAlbum").text();
+	if(idAlbum === "") return;
+	
+	var options = {
+		"title": "Ajouter des photos à l'album",
+		"btnOk" : "Ajouter",
+		"btnNop" : "Annuler",
+		"modal": "True",
+		"action" : "ajoutPhoto",
+		"data" : idAlbum,
+	};	
+	msg.open( "<form id=\"FormNewAlb\" method=\"post\" enctype=\"multipart/form-data\">"+
+				 "<input type=\"file\" name=\"listPhotos[]\" id=\"listPhotos\" multiple />  <br />"+
+				 "<span id=\"popupErrMsg\"></span>"+
+			  "</form><br />" , options);
 }
+
+
+function downloadAlbum() {
+	var idAlbum = $("#idAlbum").text();
+	if(idAlbum === "") return;
+	
+	alert("todo");
+}
+
 
 function supprAlbum() {
 	var idAlbum = $("#idAlbum").text();

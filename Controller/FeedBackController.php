@@ -59,7 +59,11 @@ class FeedBackController extends Controller
 	
 	function AjaxCheckMotDePasse($mdp)
 	{
-		if($mdp === '7b24afc8bc80e548d66c4e7ff72171c5')		// Bon mdp = toor
+		$requete = $this->DB->query("SELECT mdp FROM user WHERE nom='admin'");
+		$reponse = $requete->fetch();
+		// echo '$mdp === $reponse[mdp] = '."\n".$mdp."\n".$reponse['mdp'];   		// LES DEUX CHAINES SONT IDENTIQUES.....
+		//if($reponse && $mdp == $reponse['mdp'])		// mdp admin = md5(toor)	// ET POURTANT ELLES SONT PAS EGALES !!!!!!!!!
+		if($mdp === '7b24afc8bc80e548d66c4e7ff72171c5')
 			echo 'good';
 		else
 			echo 'bad';

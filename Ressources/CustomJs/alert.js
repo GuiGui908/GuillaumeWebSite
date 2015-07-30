@@ -529,15 +529,17 @@ var msg = ({
 		// vérifie qu'on a que des fichiers image !
 		for ( var i = 0; i < files.length; i ++ )
         {
-			var extension = files[i].name;
-			// TODO RECUPERE L'EXTENSION
-			//if(extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "bmp" && extension != "gif") {
-			//	$("#popupErrMsg").text("Un des fichiers sélectionné n'est pas un fichier image !\nExtensions acceptées : jpg jpeg png bmp gif");
-			//	return false;
-			//}
+			var parts = (files[i].name).split(".");
+			var extension = parts[parts.length -1];			
+			if(extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "bmp" && extension != "gif") {
+				if(extension != "JPG" && extension != "JPEG" && extension != "PNG" && extension != "BMP" && extension != "GIF") {
+					$("#popupErrMsg").html("Formats acceptées : jpg jpeg png bmp gif<br />Ce fichier n'est pas une image :<br />\""+files[i].name+"\"");
+					return false;
+				}
+			}
 		}
 		
-		var chemin, idAlbum;
+		var idAlbum;
 		// Appel ajax pour créer le dossier et la base.
 		$.ajax({
 			url : 'Photo.php',
@@ -550,25 +552,48 @@ var msg = ({
 					alert("AjaxCreerAlb - ERREUR= \n"+resultat);
 				else
 				{
-					chemin  = resultat[1];
 					idAlbum = resultat[2];
-					var arrayAlbums = JSON.parse(resultat[6]);
-					$("#listeAlbum").html("");		// Vide la liste
-					for(album in arrayAlbums) {
-						 $("#listeAlbum").append("<a href=\"javascript: displayAlbum('"+ arrayAlbums[album]["id"] +"');\">"+ arrayAlbums[album]["nom"] +
-													"<img class=\"loading\" id=\"loading"+ arrayAlbums[album]["id"] +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
-					}
-					alert("Les images sont pas encore uploadées.... L'album est vide");
-
+					// Ajoute l'album dans la liste de l'interface
+					arrayAlbums.push( {"id": idAlbum, "nom": nom, "proprio": proprio , "desc": desc} );
+					$("#listeAlbum").append("<a href=\"javascript: displayAlbum('"+ idAlbum +"');\">"+ nom + "<img class=\"loading\" id=\"loading"+
+											  idAlbum +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
 					// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
-					// 1 photo à la fois ?? A voir
-					msg.uploadImages(files, chemin, idAlbum);
+					msg.uploadImages(files, idAlbum);
 				}
 			},
 			error: function(resultat, statut, erreur) {
-				alert("AjaxCreerAlb - resultats= \n"+resultat);
+				alert("ERREUR AJAX AjaxCreerAlb - resultats= \n"+resultat);
 			}
 		});
+		msg.close();
+	},
+	
+	
+	/**  ACTION : ajoutPhoto()
+	 * --------------------------------------------------------------------------------------------
+ 	 *    Action faite  quand on veut ajouter des photos à un album existant
+	 *    data contient l'id de l'album cible
+ 	 */
+	"ajoutPhoto": function (data) {
+		var photos   = document.getElementById("listPhotos").files;
+		if(photos.length == 0) {
+			$("#popupErrMsg").text("Aucune photo sélectionnée !!");
+			return false;
+		}
+
+		// vérifie qu'on a que des fichiers image !
+		for ( var i = 0; i < photos.length; i ++ )
+        {
+			var parts = (photos[i].name).split(".");
+			var extension = parts[parts.length -1];			
+			if(extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "bmp" && extension != "gif") {
+				if(extension != "JPG" && extension != "JPEG" && extension != "PNG" && extension != "BMP" && extension != "GIF") {
+					$("#popupErrMsg").html("Opération ANNULEE !<br />Formats acceptées : jpg jpeg png bmp gif<br />Ce fichier n'est pas une image :<br />\""+photos[i].name+"\"");
+					return false;
+				}
+			}
+		}
+		msg.uploadImages(photos, data);
 		msg.close();
 	},
 	
@@ -576,9 +601,34 @@ var msg = ({
 	 * --------------------------------------------------------------------------------------------
  	 *    Upload dans la base de données les images une par une avec une requête ajax pour chaque
  	 */
-	"uploadImages" : function (files, chemin, idAblbum) {
-		// TODO
-		alert("uploadImages  TODO");
+	"uploadImages" : function (images, idAblbum) {
+		for(var i=0; i<images.length; i++)
+		{
+			if(images[i].size > 8388608) {		// Dépasse 8Mo
+				$("#popupErrMsg").html("Opération ANNULEE !<br />L'image \""+ images[i].name +" fait plus de 8Mo :/");
+				break;
+			}
+			else {			// Appel ajax pour envoyer l'image au serveur
+				//alert("Ajax envoi img" + images[i].name);
+				var formData = new FormData();
+				formData.append('photo', images[i], images[i].name);
+
+				$.ajax({
+					url : 'Photo.php?action=AjaxAddPhoto&idAlb='+idAblbum, 
+					type : 'POST',
+					data : formData,
+					processData: false,		// tell jQuery not to process the data
+					contentType: false,		// tell jQuery not to set contentType
+					success : function(resultat, statut) {
+					},
+					error : function(resultat, statut, erreur){
+					}
+				});
+				// Attend la fin de la requête (OU PAS)
+				//$ajaxSettings({async: false;});
+				// On lance toutes les requêtes en meme temps, pour accélérer le chargement. (si ca marche)
+			}
+		}
 	},
 
 

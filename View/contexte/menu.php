@@ -1,5 +1,5 @@
 <div id="header">
-	<h3>Mis à jour le 13 Juin 2015</h3>
+	<h3>Mis à jour le 30 Juillet 2015</h3>
 </div>
 
 <div id="menu">

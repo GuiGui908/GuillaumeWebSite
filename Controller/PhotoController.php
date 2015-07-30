@@ -20,16 +20,17 @@ class PhotoController extends Controller
 	
 	function getTableauAlbums() {
 		$album = array();
+		$arrAlb = array();
 		$reponse = $this->DB->query('SELECT * FROM album');
 		while ($donnees = $reponse->fetch()) {
 			$album['id'] = $donnees['id'];
-			$album['nom'] = htmlspecialchars($donnees['nom']);
-			$album['proprio'] = htmlspecialchars($donnees['proprietaire']);
-			$album['desc'] = htmlspecialchars($donnees['description']);
+			$album['nom'] = htmlspecialchars($donnees['nom'], ENT_QUOTES);
+			$album['proprio'] = htmlspecialchars($donnees['proprietaire'], ENT_QUOTES);
+			$album['desc'] = htmlspecialchars($donnees['description'], ENT_QUOTES);
 			$arrAlb[] = $album;
 		}
 		$reponse->closeCursor();
-		return $arrAlb;
+		return $arrAlb;		// TODO PROBLEME DES IMAGES QUI SE PUPPRIMENT PAS
 	}
 	
 	function AjaxGetPhotos($idAlbum) {
@@ -47,6 +48,47 @@ class PhotoController extends Controller
 		}
 		echo json_encode($arrPhotos);
 	}
+	
+	// Recoit UNE seule photo à stocker dans l'album idAlbum
+	function AjaxAddPhoto($idAlbum) {
+		$image = $_FILES['photo'];		// On considère qu'une seule photo est passée par la méthode post. Les éventuelles autres photos sont ignorées
+		
+		// Vérifie que le transfert s'est bien passé
+		if($image['error'] != UPLOAD_ERR_OK) { 		// Erreur
+			echo 'Le transfert de "'.$image['name'].'" a échoué !<br />';
+		}
+		else {
+			// Récupère le chemin de l'album
+			$requete = $this->DB->prepare("SELECT chemin FROM album WHERE id=:idAlb");
+			$requete -> bindParam(':idAlb', $idAlbum);
+			$requete->execute();
+			
+			$reponse = $requete->fetch();
+			$chemin = $reponse['chemin'].$image['name'];
+			
+			// INSERT INTO photo
+			$requete = $this->DB->prepare("INSERT INTO photo(idAlbum, nom, chemin) VALUES(:idAlbum, :nom, :chemin)");
+			$requete -> bindParam(':idAlbum', $idAlbum);
+			$requete -> bindParam(':nom', $image['name']);
+			$requete -> bindParam(':chemin', $chemin);
+			$requete->execute();
+			
+			if(!$requete)   // ERREUR
+				echo "Erreur pendant le stockage en BD de la photo :(";
+			
+			// Déplace l'image sur le serveur dans le bon dossier
+			$i = 2;
+			$fileName = $image['name'];
+			while(file_exists($reponse['chemin'].$fileName)) { // Préviens les doublons
+				$indiceLastPt = strrpos($image['name'], '.');
+				$fileName = substr_replace($image['name'], " ($i)", $indiceLastPt, 0);
+				$i++;
+			}
+			$image['name'] = $fileName;
+			move_uploaded_file($image['tmp_name'], $reponse['chemin'].$image['name']);	// Déplace le fichier
+		}
+	}
+	
 	
 	function AjaxSupprPhoto($idPhoto) {
 		// Cherche le chemin de la photo à supprimer
@@ -109,7 +151,10 @@ class PhotoController extends Controller
 			echo json_encode(array("<erreur>", "Erreur MKDIR pr creer dossier d'album"));
 			return;
 		}
-		
+
+		// Crée la liste de tous les albums (pr màj INTERFACE)
+		$arrAlb = $this->getTableauAlbums();
+			
 		// Crée un album dans la BD (1 ligne)
 		$requete = $this->DB->prepare("INSERT INTO album(nom, proprietaire, description, chemin, ip) VALUES(:nom, :proprio, :desc, :chemin, :ip)");
 		$requete -> bindParam(':nom', $albName);
@@ -123,7 +168,12 @@ class PhotoController extends Controller
 			return;
 		}
 		$idAlbum = $this->DB->lastInsertId();
-		$arrAlb = $this->getTableauAlbums();
+
+		// Ajoute l'album qui vient d'être inséré en BD au tableau ppour l'INTERFACE
+		$arrAlb[] = array(  'id' => $idAlbum,
+							'nom' => $albName,
+							'proprio' => $proprio,
+							'desc' => $description  );
 
 		echo json_encode( array("Succès !!!", $path, $idAlbum, $_GET['nameAlb'], $_GET['proprioAlb'], $_GET['descAlb'], json_encode($arrAlb)) );
 	}

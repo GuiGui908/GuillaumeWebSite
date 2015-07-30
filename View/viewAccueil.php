@@ -21,7 +21,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <h3>Bug connus</h3>
 <hr/>
 <ul>
-<li></li>
+<li>Apostrophes dans le nom/proprio/desc d'un album</li>
 <li></li>
 </ul><br />
 <h3>Mémo (actions en cours)</h3>
@@ -29,7 +29,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <ul>
 <li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
 <li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
-<li>Photo : Faire toute la page</li>
+<li>Jeux : Ajouter le TronGame</li>
 <li>Auth et mdp à la création album ? Et pr suppr img/album ? => sécu</li>
 <li></li>
 </ul>
@@ -37,7 +37,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <h3>Si j'ai vraiment rien à faire</h3>
 <hr/>
 <ul>
-<li>Partage : Mettre une barre de chargement Ajax</li>
+<li>Partage et Photos : Mettre une barre de chargement Ajax</li>
 <li>FeedBack : Charger en Ajax la page de consultation des avis. Pr corriger le bug du "Je poste et je regarde direct les avis" => pas màj</li>
 <li></li>
 </ul>
