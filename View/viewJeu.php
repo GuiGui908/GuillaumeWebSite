@@ -29,6 +29,16 @@
 		<a href="Ressources/images/2048_1.jpg"><img src="Ressources/images/2048_1_s.jpg" alt="ScreenShot1"/></a>
 		<a href="Ressources/images/2048_2.jpg"><img src="Ressources/images/2048_2_s.jpg" alt="ScreenShot2"/></a>
 	</div>
+
+	<hr />
+
+	<h1>Tron</h1>
+	<p>Tron game est un jeu d'arcade qui ressemble au snake, mais en multijoueur et qui peut se jouer contre l'ordinateur. Le comportement des trois snakes ordinateur est différent, l'un d'eux est vraiment dur à battre ;) Have fun ! <br />
+	Tron a été développé en Java, en programmation multithreads (un thread par snake). L'interface graphique est en Java Swing.</p>
+	<div class="jeuxImgBox">
+		<a href="Ressources/images/Tron_2.jpg"><img src="Ressources/images/Tron_2_s.jpg" alt="ScreenShot2"/></a>
+		<a href="Ressources/images/Tron_3.jpg"><img src="Ressources/images/Tron_3_s.jpg" alt="ScreenShot3"/></a>
+	</div>
 </div>
 <div class="right"> 
 	<h3>Jeu d'échecs</h3>
