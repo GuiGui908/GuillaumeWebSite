@@ -57,6 +57,10 @@
 		$controlleur->AjaxChangeDescription($_GET['desc'], $_GET['idAlb']);
 		exit;
 	}
+	else if($action ==='AjaxGetDownload') {
+		$controlleur->AjaxGetDownload($_GET['idAlbum']);
+		exit;
+	}
 	else
 		$controlleur->defaultAction();
 	

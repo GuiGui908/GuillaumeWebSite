@@ -21,7 +21,7 @@ Les deux mêmes endroits à une période de l'année opposée.
 <h3>Bug connus</h3>
 <hr/>
 <ul>
-<li>Apostrophes dans le nom/proprio/desc d'un album</li>
+<li></li>
 <li></li>
 </ul><br />
 <h3>Mémo (actions en cours)</h3>

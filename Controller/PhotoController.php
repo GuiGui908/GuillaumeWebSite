@@ -15,7 +15,7 @@ class PhotoController extends Controller
 		parent::setVariable('proprioAlb', $proprioAlb);
 		parent::setVariable('nbTofAlb', $nbTofAlb);
 		parent::setVariable('descAlb', $descAlb);
-		parent::setVariable('arrAlb', json_encode($arrAlb));
+		parent::setVariable('arrAlb', json_encode($arrAlb, JSON_HEX_APOS));		//JSON_HEX_APOS set à échapper les ' en \u0027
 	}
 	
 	function getTableauAlbums() {
@@ -24,13 +24,13 @@ class PhotoController extends Controller
 		$reponse = $this->DB->query('SELECT * FROM album');
 		while ($donnees = $reponse->fetch()) {
 			$album['id'] = $donnees['id'];
-			$album['nom'] = htmlspecialchars($donnees['nom'], ENT_QUOTES);
-			$album['proprio'] = htmlspecialchars($donnees['proprietaire'], ENT_QUOTES);
-			$album['desc'] = htmlspecialchars($donnees['description'], ENT_QUOTES);
+			$album['nom'] = $donnees['nom'];
+			$album['proprio'] = $donnees['proprietaire'];
+			$album['desc'] = $donnees['description'];
 			$arrAlb[] = $album;
 		}
 		$reponse->closeCursor();
-		return $arrAlb;		// TODO PROBLEME DES IMAGES QUI SE PUPPRIMENT PAS
+		return $arrAlb;
 	}
 	
 	function AjaxGetPhotos($idAlbum) {
@@ -222,6 +222,32 @@ class PhotoController extends Controller
 		// Affiche le json de la liste des albums pour que la modif s'affiche dans la liste
 		$arrAlb = $this->getTableauAlbums();
 		echo json_encode($arrAlb);
+	}
+	
+	
+	function AjaxGetDownload($idAlbum) {
+		$requete = $this->DB->prepare("SELECT nom FROM album WHERE id=:idAlbum");
+		$requete -> bindParam(':idAlbum', $idAlbum);
+		$requete->execute();
+		$filename = $requete->fetch()['nom'] . '.zip';
+
+		$requete = $this->DB->prepare("SELECT * FROM photo WHERE idAlbum=:idAlbum");
+		$requete -> bindParam(':idAlbum', $idAlbum);
+		$requete->execute();
+
+		$zip = new ZipArchive();
+		if ($zip->open('Ressources/temp/'.$filename, ZipArchive::CREATE)!==TRUE) {
+			exit("Impossible d'ouvrir le fichier <$filename>\n");
+		}
+		
+		while($ligne = $requete->fetch()) {
+			$zip->addFile($ligne['chemin'], $ligne['nom']);
+		}
+		//echo "Nombre de fichiers : " . $zip->numFiles . "\n";
+		//echo "Statut :" . $zip->status . "\n";
+		$zip->close();
+		
+		echo json_encode( array('Ressources/temp/'.$filename, $filename) );
 	}
 }
 

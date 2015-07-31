@@ -497,12 +497,12 @@ var msg = ({
 			success : function(resultat, statut) {
 				$("#loadingSupprAlb").hide();
 				$("#succesSupprAlb").show();
-				setTimeout("location.reload(true);", 2000);
+				setTimeout("location.reload(true);", 1000);
 			},
 			error : function(resultat, statut, erreur){
 				$("#loadingSupprAlb").hide();
 				$("#errSupprAlb").show();
-				setTimeout("location.reload(true);", 2000);
+				setTimeout("location.reload(true);", 3000);
 			}
 		});
 		msg.close();
@@ -558,14 +558,16 @@ var msg = ({
 					$("#listeAlbum").append("<a href=\"javascript: displayAlbum('"+ idAlbum +"');\">"+ nom + "<img class=\"loading\" id=\"loading"+
 											  idAlbum +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
 					// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
+					msg.close();		// Ferme la fenêtre de choix des photos
+					msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ files.length, null);
 					msg.uploadImages(files, idAlbum);
+					msg.close();		// Ferme la fenêtre d'avancement du chargement
 				}
 			},
 			error: function(resultat, statut, erreur) {
 				alert("ERREUR AJAX AjaxCreerAlb - resultats= \n"+resultat);
 			}
 		});
-		msg.close();
 	},
 	
 	
@@ -581,9 +583,14 @@ var msg = ({
 			return false;
 		}
 
-		// vérifie qu'on a que des fichiers image !
+		// vérifie qu'on a que des fichiers image < 8Mo !
 		for ( var i = 0; i < photos.length; i ++ )
         {
+			if(photos[i].size > 8388608) {		// Dépasse 8Mo
+				$("#popupErrMsg").html("Opération ANNULEE !<br />L'image \""+ images[i].name +" fait plus de 8Mo :/");
+				break;
+			}
+
 			var parts = (photos[i].name).split(".");
 			var extension = parts[parts.length -1];			
 			if(extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "bmp" && extension != "gif") {
@@ -593,8 +600,10 @@ var msg = ({
 				}
 			}
 		}
+		msg.close();		// Ferme la fenêtre de choix des photos
+		msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ photos.length, null);
 		msg.uploadImages(photos, data);
-		msg.close();
+		msg.close();		// Ferme la fenêtre d'avancement du chargement
 	},
 	
 	/**  AUXILIAIRE : uploadImages()
@@ -602,32 +611,30 @@ var msg = ({
  	 *    Upload dans la base de données les images une par une avec une requête ajax pour chaque
  	 */
 	"uploadImages" : function (images, idAblbum) {
+		var completed = 0;
 		for(var i=0; i<images.length; i++)
 		{
-			if(images[i].size > 8388608) {		// Dépasse 8Mo
-				$("#popupErrMsg").html("Opération ANNULEE !<br />L'image \""+ images[i].name +" fait plus de 8Mo :/");
-				break;
-			}
-			else {			// Appel ajax pour envoyer l'image au serveur
-				//alert("Ajax envoi img" + images[i].name);
-				var formData = new FormData();
-				formData.append('photo', images[i], images[i].name);
+			// Appel ajax pour envoyer l'image au serveur
+			//alert("Ajax envoi img" + images[i].name);
+			var formData = new FormData();
+			formData.append('photo', images[i], images[i].name);
 
-				$.ajax({
-					url : 'Photo.php?action=AjaxAddPhoto&idAlb='+idAblbum, 
-					type : 'POST',
-					data : formData,
-					processData: false,		// tell jQuery not to process the data
-					contentType: false,		// tell jQuery not to set contentType
-					success : function(resultat, statut) {
-					},
-					error : function(resultat, statut, erreur){
-					}
-				});
-				// Attend la fin de la requête (OU PAS)
-				//$ajaxSettings({async: false;});
-				// On lance toutes les requêtes en meme temps, pour accélérer le chargement. (si ca marche)
-			}
+			$.ajax({
+				url : 'Photo.php?action=AjaxAddPhoto&idAlb='+idAblbum, 
+				type : 'POST',
+				async: false,
+				data : formData,
+				processData: false,		// tell jQuery not to process the data
+				contentType: false,		// tell jQuery not to set contentType
+				success : function(resultat, statut) {
+					completed++;
+					$("#avancement").html(completed);
+				},
+				error : function(resultat, statut, erreur){
+				}
+			});
+			//$ajaxSettings({async: false;});		// [pseudocode] Attend la fin de la requête
+			// On lance toutes les requêtes Ajax en meme temps, pour accélérer le chargement.
 		}
 	},
 
@@ -754,7 +761,7 @@ var msg = ({
 		
 			// bouton Droite (optionnel)
 			var btnD = '';
-			if (allOptions.button || allOptions.button===0) {
+			if ((allOptions.button || allOptions.button===0) && allOptions.btnNop) {
 				btnD = '<a href="#" onclick="msg.close();return false;">'+allOptions.btnNop+'</a></div>';
 			}
 		
@@ -893,28 +900,29 @@ msg.init();
 
 // quelques préréglages (pas indispensables)
 
-/*
+
 msg.preset( // message de type alert(), en plus joli
 	"alert", // nom du réglage
 	"!", // message par défaut
 	{ // options par défaut
 		"modal" : true,
 		"title" : "attention !",
-		"button" : "ok",
-		"context" : '<img style="float:left;padding:0 .5em 0 0" src="Ressources/images/alert.gif" />$msg$'
+		"btnOk" : "Ok",
+		"btnNop": null,
+		"context" : '<img style="float:left;padding:0 .5em 0 0" src="Ressources/images/errWhite.jpg" />$msg$'
 	}
 );
 
 msg.preset( // indiquer un chargement en cours (pense à fermer le message quand le chargement est terminé)r
 	"loading", // nom du réglage
-	"veuillez patienter...", // message par défaut
+	"veuillez patienter", // message par défaut
 	{ // options par défaut
 		"modal" : true,
 		"button" : null,
-		"title" : "chargement en cours",
-		"context" : '<span style="padding-left:20px;background:transparent url(Ressources/images/loader.gif) no-repeat left center;">$msg$</span>'
+		"title" : "Chargement en cours...",
+		"context" : '<div style="text-align: center;"><img src="Ressources/images/waitWhite.gif" alt="Veuillez patienter..."	/></div><br />$msg$'
 	}
-);*/
+);
 
 msg.preset( // message sous forme d'infobulle
 	"tip", // nom du réglage

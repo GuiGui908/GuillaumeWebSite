@@ -37,6 +37,7 @@
 	<div id="listeAlbum">
 		<!-- Contenu généré ici -->
 	</div>
+	<a id="hiddenDlLink" class="hidden" href="#" download="album">Lien invisible qui est cliqué auto quand php a fini de compresser l'album pour téléchargement</a>
 </div>
 
 
@@ -293,7 +294,22 @@ function downloadAlbum() {
 	var idAlbum = $("#idAlbum").text();
 	if(idAlbum === "") return;
 	
-	alert("todo");
+	msg.reload('loading', 'Compression des images : Etape 1/1', null);
+	$.ajax({
+		url : 'Photo.php',
+		type : 'GET',
+		data : 'action=AjaxGetDownload&idAlbum=' + idAlbum,
+		dataType : 'text',
+		success : function(resultat, statut) {
+			resultat = JSON.parse(resultat);
+			msg.close();
+			$("#hiddenDlLink").attr('href', resultat[0]);		// resultat[0] = lien du fichier zip
+			$("#hiddenDlLink").attr('download', resultat[1]);	// resultat[1] = nom du fichier zip
+			document.getElementById("hiddenDlLink").click();
+		},
+		error : function(resultat, statut, erreur){
+		}
+	});
 }
 
 
