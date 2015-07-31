@@ -28,16 +28,17 @@ Les deux mêmes endroits à une période de l'année opposée.
 <hr/>
 <ul>
 <li>Mettre tous les js en version 'min' pr améliorer les perfs</li>
+<li>Photos : Barre de chargement + explicite (+ vitesse transfert)</li>
+<li>Trouver une API qui réduit les photos pour accélérer le chargement des miniatures</li>
+<li>Auth et mdp à la création album => Restreindre suppr img/album ; la modif nom album ; ajout photos </li>
+<li>Pk pas interface oubli mdp avec mail récup</li>
 <li>Jeux : trouver une api JS qui affiche l'image taille réelle au survol. Le mieux est de charger les grosses images en BG</li>
-<li>Jeux : Ajouter le TronGame</li>
-<li>Auth et mdp à la création album ? Et pr suppr img/album ? => sécu</li>
 <li></li>
 </ul>
 <br />
 <h3>Si j'ai vraiment rien à faire</h3>
 <hr/>
 <ul>
-<li>Partage et Photos : Mettre une barre de chargement Ajax</li>
 <li>FeedBack : Charger en Ajax la page de consultation des avis. Pr corriger le bug du "Je poste et je regarde direct les avis" => pas màj</li>
 <li></li>
 </ul>
