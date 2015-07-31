@@ -47,20 +47,19 @@
 		<li><a href="<?php echo $this->getVariable('SetupChessWin'); ?>">Setup Windows</a></li>
 		<li><a href="<?php echo $this->getVariable('ChessLinux'); ?>">Code source + Executable Linux</a></li>
 	</ul>
-	<br />
-	<br />
 	<h3>Jeu d'othello</h3>
 	<ul>
 		<li><a href="<?php echo $this->getVariable('SetupOthelloWin'); ?>">Setup Windows</a></li>
 		<li><a href="<?php echo $this->getVariable('SrcOthello'); ?>">Sources Code::Blocks</a></li>
 	</ul>
-	<br />
 	<h3>2048</h3>
 	<ul>
 		<li><a href="<?php echo $this->getVariable('Setup2048'); ?>">Setup Windows</a></li>
 		<li><a href="<?php echo $this->getVariable('Src2048'); ?>">Code source (projet Eclipse)</a></li>
 	</ul>
-	<br />
-	<br />
-	<br />
+	<h3>Tron</h3>
+	<ul>
+		<li><a href="<?php echo $this->getVariable('Tron'); ?>">Tron Game (jar)</a></li>
+		<li><a href="<?php echo $this->getVariable('SrcTron'); ?>">Sources du projet</a></li>
+	</ul>
 </div>

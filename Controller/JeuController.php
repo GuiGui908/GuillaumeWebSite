@@ -12,5 +12,8 @@ class JeuController extends Controller
 
 		parent::setVariable('Setup2048', 'Ressources/Lancer_2048.zip');
 		parent::setVariable('Src2048', 'Ressources/2048Src.zip');
+
+		parent::setVariable('Tron', 'Ressources/Tron Game.zip');
+		parent::setVariable('SrcTron', 'Ressources/TronSrc.zip');
 	}
 }
