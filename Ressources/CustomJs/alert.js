@@ -518,6 +518,7 @@ var msg = ({
 		var proprio = $("#proprioAlb").val();
 		var files   = document.getElementById("listPhotos").files;
 		var desc    = $("#descAlb").val();
+		var totalSize = 0.01;	// 0.01 évite une éventuelle division par zéro
 
 		// Si les champs sont pas remplis, on met une erreur
 		if(nom == "") { $("#popupErrMsg").text("Vous devez donner un nom à l'album !");                		   return false; }
@@ -537,6 +538,7 @@ var msg = ({
 					return false;
 				}
 			}
+			totalSize += files[i].size;
 		}
 		
 		var idAlbum;
@@ -559,7 +561,7 @@ var msg = ({
 											  idAlbum +"\" src=\"Ressources/images/waitWhite.gif\" alt=\"Patientez.....\" /></a>");
 					// Appel Ajax pour enregistrer les photos (vérif si y'en a + que 8Mo)
 					msg.close();		// Ferme la fenêtre de choix des photos
-					msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ files.length, null);
+					msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ files.length +" ("+ (totalSize/1048576).toFixed(2) +" Mo total)", null);
 					msg.uploadImages(files, idAlbum);
 					msg.close();		// Ferme la fenêtre d'avancement du chargement
 				}
@@ -583,11 +585,12 @@ var msg = ({
 			return false;
 		}
 
+		var totalSize = 0.01;	// 0.01 évite une éventuelle division par zéro
 		// vérifie qu'on a que des fichiers image < 8Mo !
 		for ( var i = 0; i < photos.length; i ++ )
         {
 			if(photos[i].size > 8388608) {		// Dépasse 8Mo
-				$("#popupErrMsg").html("Opération ANNULEE !<br />L'image \""+ images[i].name +" fait plus de 8Mo :/");
+				$("#popupErrMsg").html("Opération ANNULEE !<br />L'image \""+ photos[i].name +" fait plus de 8Mo :/");
 				break;
 			}
 
@@ -599,9 +602,10 @@ var msg = ({
 					return false;
 				}
 			}
+			totalSize += photos[i].size;
 		}
 		msg.close();		// Ferme la fenêtre de choix des photos
-		msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ photos.length, null);
+		msg.reload("loading", "Envoi de l'image <span id=\"avancement\">1</span> sur "+ photos.length +" ("+ (totalSize/1048576).toFixed(2) +" Mo total)", null);
 		msg.uploadImages(photos, data);
 		msg.close();		// Ferme la fenêtre d'avancement du chargement
 	},
